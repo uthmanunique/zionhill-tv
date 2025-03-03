@@ -1,0 +1,348 @@
+/* Reels Preview screen styles */
+.reels-preview {
+  min-height: 100vh;
+  background-color: #000; /* Dark background like Shorts */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main content area */
+.reels-content {
+  padding-top: 80px; /* Space for fixed header */
+  display: flex;
+  justify-content: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: relative;
+  flex-grow: 1;
+  height: calc(100vh - 80px); /* Full viewport height minus header */
+  overflow: hidden; /* Prevents scrolling */
+}
+
+/* Reels player container */
+.reels-player-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  max-width: 1440px; /* Matches design width */
+  height: 100%;
+  transition: padding-left 0.3s ease; /* Smooth shift with nav */
+}
+
+.reels-player-container.nav-open {
+  padding-left: 250px; /* Shifts right when nav opens */
+}
+
+/* Reels frame */
+.reels-frame {
+  width: 500px; /* Your specified width */
+  height: 760px; /* Your specified height */
+  max-height: calc(100vh - 100px); /* Prevents overlap with header */
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  background: #000; /* Black background for video */
+}
+
+.reels-player {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  object-fit: cover; /* Ensures video fills frame */
+}
+
+/* Reels controls (hidden by default, shown on hover) */
+.reels-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.7); /* Darker overlay */
+  color: #fff;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s ease; /* Smooth fade */
+}
+
+.reels-frame:hover .reels-controls {
+  opacity: 1; /* Show on hover */
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: #572668; /* Purple progress bar */
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.control-buttons {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.control-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.control-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.volume-slider {
+  width: 80px;
+  height: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* Reels actions (Like, Dislike, Share, Comments) */
+.reels-actions {
+  position: absolute;
+  right: -32px; /* 8px gap + 24px icon width */
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.action-icon {
+  width: 24px; /* Your specified size */
+  height: 24px;
+  cursor: pointer;
+}
+
+.action-item span {
+  font-size: 14px;
+  color: #fff; /* White for visibility on dark bg */
+}
+
+/* Reels comments popup (on right) */
+.reels-comments-popup {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 400px;
+  height: 100%;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px 0 0 8px;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+}
+
+.reels-title {
+  font-size: 20px;
+  color: #333;
+  margin: 0 0 15px 0;
+  text-align: left;
+}
+
+/* Comments section */
+.comments-section {
+  background: #fff;
+  padding: 0; /* No extra padding inside popup */
+}
+
+.comments-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.sort-by {
+  border: none;
+  background: none;
+  font-size: 14px;
+  color: #666;
+}
+
+.comment {
+  margin-bottom: 15px;
+}
+
+.comment p:first-child {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.comment p:first-child span {
+  color: #999;
+  font-size: 12px;
+}
+
+.comment p:last-child {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Reels navigation (Up/Down) */
+.reels-navigation {
+  position: fixed; /* Sticky to screen */
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 1000; /* Above content */
+}
+
+.nav-button {
+  background: #572668; /* Purple background */
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.nav-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nav1-icon {
+  width: 24px; /* Matches action icons */
+  height: 24px;
+  filter: brightness(0) invert(1); /* White icon */
+}
+
+/* Responsive Design */
+@media (max-width: 1440px) {
+  .reels-player-container.nav-open {
+    padding-left: 270px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .reels-player-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .reels-comments-popup {
+    width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .reels-player-container.nav-open {
+    padding-left: 220px; /* Matches tablet nav width */
+  }
+
+  .reels-frame {
+    width: 400px;
+    height: 600px; /* Adjusted for smaller screens */
+    max-height: calc(100vh - 90px);
+  }
+
+  .reels-actions {
+    right: -32px; /* Maintain 8px gap */
+  }
+
+  .action-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .action-item span {
+    font-size: 12px;
+  }
+
+  .nav1-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .reels-title {
+    font-size: 18px;
+  }
+
+  .control-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .volume-slider {
+    width: 60px;
+  }
+
+  .reels-comments-popup {
+    width: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .reels-player-container {
+    padding-left: 0; /* Full screen on mobile */
+    padding-right: 0;
+  }
+
+  .reels-player-container.nav-open {
+    padding-left: 0; /* No nav shift on mobile */
+  }
+
+  .reels-content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .reels-frame {
+    width: 100%; /* Full screen width */
+    height: 100%; /* Full screen height */
+    max-height: 100vh; /* No header overlap */
+    border-radius: 0; /* No radius on mobile */
+  }
+
+  /* Hide header and nav on mobile */
+  .reels-preview > header,
+  .reels-preview > nav {
+    display: none;
+  }
+
+  .reels-content {
+    padding-top: 0; /* No header space */
+  }
+
+  .reels-actions {
+    position: absolute;
+    right: 10px; /* Inside frame */
+    top: auto;
+    bottom: 20px; /* Positioned at bottom inside frame */
+    transform: none;
+  }
+
+  .reels-comments-popup {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%; /* Full width on mobile */
+    height: calc(100vh - 100px); /* Leave space for actions */
+    border-radius: 0;
+  }
+
+  .nav-button {
+    display: none; /* Hide on mobile, rely on swipe */
+  }
+}

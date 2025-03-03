@@ -1,0 +1,141 @@
+/* Documentaries section styles */
+.documentaries {
+  padding: 40px 20px; /* Space above and below */
+  background-color: #f5f5f5; /* Matches home background */
+}
+
+/* Documentaries title */
+.documentaries-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin: 0 0 20px 250px; /* Aligns with nav width */
+}
+
+/* Documentaries container (scrollable horizontally) */
+.documentaries-container {
+  padding-left: 250px; /* Aligns with nav width */
+  padding-right: 20px; /* Right padding */
+  overflow-x: auto; /* Enables horizontal scrolling */
+  scroll-behavior: smooth; /* Smooth scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth touch scrolling on mobile */
+}
+
+/* Hide scrollbar for cleaner look */
+.documentaries-container::-webkit-scrollbar {
+  display: none;
+}
+
+.documentaries-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Documentaries row */
+.documentaries-row {
+  display: flex;
+  gap: 20px; /* Space between frames */
+  margin-bottom: 20px; /* Space between rows */
+}
+
+/* Documentary frame */
+.documentary-frame {
+  flex: 0 0 400px; /* Fixed width, no shrinking */
+  height: 270px; /* Height + title space */
+}
+
+/* Documentary image */
+.documentary-image {
+  width: 400px; /* Landscape width */
+  height: 220px; /* Landscape height */
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px; /* Consistent radius */
+}
+
+/* Documentary title */
+.documentary-title {
+  font-size: 14px;
+  color: #333;
+  margin: 10px 0 0 0;
+  text-align: left;
+  line-height: 1.4;
+  max-width: 400px; /* Matches frame width */
+}
+
+/* Responsive Design */
+@media (max-width: 1440px) {
+  .documentaries-title {
+    margin-left: 20px; /* Reset when nav is collapsed */
+  }
+
+  .documentaries-container {
+    padding-left: 20px; /* Reset when nav is collapsed */
+  }
+
+  .documentaries-container.nav-open {
+    padding-left: 270px; /* Shift when nav is open */
+  }
+}
+
+@media (max-width: 768px) {
+  .documentaries-title {
+    font-size: 20px;
+    margin-left: 20px;
+  }
+
+  .documentaries-container {
+    padding-left: 20px;
+    gap: 15px;
+  }
+
+  .documentaries-container.nav-open {
+    padding-left: 220px; /* Matches tablet nav width */
+  }
+
+  .documentary-frame {
+    flex: 0 0 300px;
+    height: 200px;
+  }
+
+  .documentary-image {
+    width: 300px;
+    height: 165px;
+  }
+
+  .documentary-title {
+    font-size: 13px;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .documentaries-title {
+    font-size: 18px;
+    margin-left: 15px;
+  }
+
+  .documentaries-container {
+    padding-left: 15px;
+    gap: 10px;
+  }
+
+  .documentaries-container.nav-open {
+    padding-left: 195px; /* Matches mobile nav width */
+  }
+
+  .documentary-frame {
+    flex: 0 0 220px;
+    height: 150px;
+  }
+
+  .documentary-image {
+    width: 220px;
+    height: 120px;
+  }
+
+  .documentary-title {
+    font-size: 12px;
+    max-width: 220px;
+  }
+}

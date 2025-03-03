@@ -1,0 +1,274 @@
+/* Hero section styles */
+.hero {
+  height: 700px; /* Your specified height */
+  width: 100%;
+  position: relative;
+  overflow: hidden; /* Prevents overflow */
+  z-index: 1; /* Lower than navigation */
+}
+
+/* Hero slide with animation */
+.hero-slide {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: slideFade 5s infinite; /* Matches interval */
+}
+
+/* Hero content container */
+.hero-content {
+  position: absolute;
+  left: 20px; /* Starts near left edge when nav is collapsed */
+  top: 180px; /* Current position */
+  max-width: calc(1440px - 40px); /* Fits within 1440px design width with padding */
+  padding-right: 20px; /* Spacing from right edge */
+  transition: left 0.3s ease; /* Smooth shift when nav opens */
+}
+
+/* Shift content when navigation is open */
+.hero-content.nav-open {
+  left: 270px; /* Matches nav width (250px) + padding */
+}
+
+/* Zionhill TV frame */
+.zionhill-frame {
+  background-color: #fff;
+  height: 40px; /* Reduced drastically */
+  width: 150px; /* Reduced */
+  border-radius: 4px; /* Your specified radius */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px; /* Reduced spacing */
+}
+
+.zionhill-frame span {
+  font-size: 16px; /* Smaller text */
+  font-weight: bold;
+  color: #333;
+}
+
+/* Hero title */
+.hero-title {
+  font-size: 40px; /* Reduced from 60px */
+  color: #fff; /* White for contrast on bg */
+  margin: 0 0 15px 0; /* Reduced spacing */
+  line-height: 1.2;
+}
+
+/* Hero description */
+.hero-description {
+  font-size: 14px; /* Reduced from 17px */
+  color: #fff; /* White for contrast */
+  max-width: 500px; /* Slightly smaller width */
+  margin: 0 0 20px 0; /* Reduced spacing */
+  line-height: 1.5;
+}
+
+/* CTA button */
+.hero-cta {
+  background-color: #572668; /* Your purple background */
+  height: 54px; /* Your specified height */
+  width: 209px; /* Your specified width */
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 20px;
+  transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+.hero-cta:hover {
+  background-color: #451f55; /* Darker purple on hover */
+}
+
+/* Carousel controls */
+.carousel-controls {
+  position: absolute;
+  right: 20px; /* Moved to right side */
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.carousel-prev,
+.carousel-next {
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-prev:hover,
+.carousel-next:hover {
+  background: rgba(0, 0, 0, 0.8); /* Darker on hover */
+}
+
+/* Carousel dots */
+.carousel-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dot.active {
+  opacity: 1;
+  transform: scale(1.2); /* Slightly larger when active */
+}
+
+/* Animation keyframes */
+@keyframes slideFade {
+  0% {
+    opacity: 0;
+    transform: translateX(50px); /* Start slightly right */
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(0); /* Fully visible */
+  }
+  80% {
+    opacity: 1;
+    transform: translateX(0); /* Stay visible */
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50px); /* Exit left */
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1440px) {
+  .hero-content {
+    max-width: calc(100% - 40px); /* Adjusts to screen width */
+  }
+
+  .hero-content.nav-open {
+    left: 270px; /* Consistent shift */
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    height: 500px; /* Smaller height for tablets */
+  }
+
+  .hero-content {
+    left: 20px; /* Near left edge when nav is collapsed */
+    max-width: calc(100% - 40px);
+    top: 160px; /* Adjusted down */
+  }
+
+  .hero-content.nav-open {
+    left: 220px; /* Matches narrower nav (220px) */
+  }
+
+  .zionhill-frame {
+    height: 36px;
+    width: 130px;
+  }
+
+  .zionhill-frame span {
+    font-size: 14px;
+  }
+
+  .hero-title {
+    font-size: 30px;
+  }
+
+  .hero-description {
+    font-size: 13px;
+    max-width: 350px;
+  }
+
+  .hero-cta {
+    height: 48px;
+    width: 180px;
+    font-size: 14px;
+  }
+
+  .carousel-prev,
+  .carousel-next {
+    font-size: 18px;
+    padding: 5px 8px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: 400px; /* Smaller for mobile */
+  }
+
+  .hero-content {
+    left: 15px;
+    top: 140px; /* Adjusted down */
+    max-width: calc(100% - 30px);
+  }
+
+  .hero-content.nav-open {
+    left: 195px; /* Matches mobile nav (195px) */
+  }
+
+  .zionhill-frame {
+    height: 30px;
+    width: 100px;
+  }
+
+  .zionhill-frame span {
+    font-size: 12px;
+  }
+
+  .hero-title {
+    font-size: 24px;
+  }
+
+  .hero-description {
+    font-size: 12px;
+    max-width: 250px;
+  }
+
+  .hero-cta {
+    height: 40px;
+    width: 150px;
+    font-size: 12px;
+  }
+
+  .carousel-prev,
+  .carousel-next {
+    font-size: 16px;
+    padding: 4px 6px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+  }
+}

@@ -1,0 +1,167 @@
+/* Reelz section styles (renamed from Reels) */
+.reelz {
+    padding: 40px 20px; /* Space above and below */
+    background-color: #f5f5f5; /* Matches home background */
+  }
+  
+  /* Reelz title */
+  .reelz-head {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin: 0 0 20px 250px; /* Aligns with nav width, matches Recent Messages */
+  }
+  
+  /* Reelz container (scrollable horizontally) */
+  .reelz-container {
+    display: flex;
+    gap: 20px; /* Space between frames */
+    overflow-x: auto; /* Enables horizontal scrolling */
+    padding-left: 250px; /* Aligns with nav width, matches Recent Messages */
+    padding-right: 20px; /* Right padding */
+    scroll-behavior: smooth; /* Smooth scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth touch scrolling on mobile */
+  }
+  
+  /* Hide scrollbar for cleaner look */
+  .reelz-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .reelz-container {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  /* Reelz frame */
+  .reelz-frame {
+    flex: 0 0 220px; /* Fixed width, no shrinking */
+    height: 450px; /* Height + title space */
+  }
+  
+  /* Reelz image */
+  .reelz-image {
+    width: 220px; /* Your specified width */
+    height: 400px; /* Your specified height */
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px; /* Your specified radius */
+    position: relative; /* For positioning favorite icon */
+  }
+  
+  /* Reelz title (under frame) */
+  .reelz-title {
+    font-size: 14px;
+    color: #333;
+    margin: 10px 0 0 0;
+    text-align: left;
+    line-height: 1.4;
+    max-width: 220px; /* Matches frame width */
+  }
+  
+  /* Favorite icon */
+  .favorite-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .favorite-icon img {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .favorite-icon.active img {
+    filter: brightness(0) saturate(100%) hue-rotate(0deg); /* Adjust if your active icon differs */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1440px) {
+    .reelz-head {
+      margin-left: 20px; /* Reset when nav is collapsed */
+    }
+  
+    .reelz-container {
+      padding-left: 20px; /* Reset when nav is collapsed */
+    }
+  
+    .reelz-container.nav-open {
+      padding-left: 270px; /* Shift when nav is open */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .reelz-title {
+      font-size: 20px;
+      margin-left: 20px;
+    }
+  
+    .reelz-container {
+      padding-left: 20px;
+      gap: 15px;
+    }
+  
+    .reelz-container.nav-open {
+      padding-left: 220px; /* Matches tablet nav width */
+    }
+  
+    .reelz-frame {
+      flex: 0 0 180px;
+      height: 370px;
+    }
+  
+    .reelz-image {
+      width: 180px;
+      height: 330px;
+    }
+  
+    .reelz-title {
+      font-size: 13px;
+      max-width: 180px;
+    }
+  
+    .favorite-icon img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .reelz-title {
+      font-size: 18px;
+      margin-left: 15px;
+    }
+  
+    .reelz-container {
+      padding-left: 15px;
+      gap: 10px;
+    }
+  
+    .reelz-container.nav-open {
+      padding-left: 195px; /* Matches mobile nav width */
+    }
+  
+    .reelz-frame {
+      flex: 0 0 150px;
+      height: 310px;
+    }
+  
+    .reelz-image {
+      width: 150px;
+      height: 270px;
+    }
+  
+    .reelz-title {
+      font-size: 12px;
+      max-width: 150px;
+    }
+  
+    .favorite-icon img {
+      width: 18px;
+      height: 18px;
+    }
+  }

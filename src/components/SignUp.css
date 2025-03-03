@@ -1,0 +1,312 @@
+/* Sign-Up screen styles */
+.signup-screen {
+    min-height: 100vh;
+    background-color: #f5f5f5; /* Matches home background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 20px;
+  }
+  
+  /* Back button */
+  .back-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Sign-Up frame */
+  .signup-frame {
+    width: 674px; /* Your specified width */
+    height: 674px; /* Your specified height */
+    border: 2px solid #ccc; /* Grey stroke */
+    border-radius: 16px; /* Your specified radius */
+    background: transparent; /* Not filled */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    box-sizing: border-box;
+  }
+  
+  /* Sign-Up title */
+  .signup-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  /* Input group */
+  .input-group {
+    position: relative;
+    width: 100%;
+    max-width: 500px; /* Matches CTA width */
+    margin-bottom: 30px;
+  }
+  
+  .input-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .input-label {
+    position: absolute;
+    left: 40px; /* Space for icon */
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #666;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  
+  .input-label.active {
+    top: -10px;
+    font-size: 12px;
+    color: #333;
+  }
+  
+  .input-icon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .input-field {
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-bottom: 2px solid #ccc; /* Line under */
+    background: transparent;
+    padding: 0 40px; /* Space for icons */
+    font-size: 16px;
+    color: #333;
+    outline: none;
+  }
+  
+  .input-field:focus {
+    border-bottom: 2px solid #572668; /* Purple when active */
+  }
+  
+  .visibility-toggle {
+    background: none;
+    border: none;
+    padding: 0;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .visibility-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Forgot Password */
+  .forgot-password {
+    width: 100%;
+    max-width: 500px; /* Matches CTA width */
+    text-align: right;
+    margin-bottom: 20px;
+  }
+  
+  .forgot-password a {
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+  }
+  
+  .forgot-password a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Sign-Up CTA */
+  .signup-cta {
+    width: 100%;
+    max-width: 500px; /* Matches text fields */
+    height: 53px; /* Your specified height */
+    border-radius: 8px;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signup-cta:disabled {
+    background-color: #ccc; /* Grey when disabled */
+    cursor: not-allowed;
+  }
+  
+  /* Sign-In link */
+  .signin-link {
+    font-size: 14px;
+    color: #666;
+    margin-top: 20px;
+  }
+  
+  .signin-link a {
+    color: #572668; /* Purple for link */
+    text-decoration: none;
+  }
+  
+  .signin-link a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .signup-frame {
+      width: 500px;
+      height: 500px;
+      padding: 30px;
+    }
+  
+    .signup-title {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+  
+    .input-group {
+      max-width: 400px;
+      margin-bottom: 25px;
+    }
+  
+    .forgot-password {
+      max-width: 400px;
+    }
+  
+    .signup-cta {
+      max-width: 400px;
+      height: 48px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .signup-frame {
+      width: 400px;
+      height: 400px;
+      padding: 20px;
+    }
+  
+    .signup-title {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+  
+    .input-group {
+      max-width: 300px;
+      margin-bottom: 20px;
+    }
+  
+    .input-field {
+      height: 36px;
+      font-size: 14px;
+    }
+  
+    .input-label {
+      font-size: 14px;
+    }
+  
+    .input-label.active {
+      top: -8px;
+      font-size: 10px;
+    }
+  
+    .forgot-password {
+      max-width: 300px;
+      font-size: 12px;
+    }
+  
+    .signup-cta {
+      max-width: 300px;
+      height: 45px;
+      font-size: 14px;
+    }
+  
+    .signin-link {
+      font-size: 12px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .signup-screen {
+      padding: 10px;
+    }
+  
+    .signup-frame {
+      width: 100%;
+      height: auto;
+      min-height: 350px;
+      padding: 15px;
+      border-radius: 12px;
+    }
+  
+    .back-button {
+      top: 10px;
+      right: 10px;
+      font-size: 14px;
+    }
+  
+    .signup-title {
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+  
+    .input-group {
+      max-width: 100%;
+      margin-bottom: 15px;
+    }
+  
+    .input-field {
+      height: 32px;
+      font-size: 12px;
+    }
+  
+    .input-icon,
+    .visibility-icon {
+      width: 16px;
+      height: 16px;
+    }
+  
+    .input-label {
+      left: 30px;
+      font-size: 12px;
+    }
+  
+    .input-label.active {
+      top: -6px;
+      font-size: 8px;
+    }
+  
+    .forgot-password {
+      max-width: 100%;
+      font-size: 10px;
+    }
+  
+    .signup-cta {
+      max-width: 100%;
+      height: 40px;
+      font-size: 12px;
+    }
+  
+    .signin-link {
+      font-size: 10px;
+      margin-top: 15px;
+    }
+  }
