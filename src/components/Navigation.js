@@ -76,14 +76,14 @@ const Navigation = ({ isOpen }) => {
           className={`nav-item ${activeItem === 'partnership' ? 'active' : ''}`}
           onClick={() => handleItemClick('partnership', null, '/partnership')}
         >
-          <img src={`${process.env.PUBLIC_URL}/partnership-icon.png`} alt="Partnership Icon" className="nav-icon" />
+          <img src={`${process.env.PUBLIC_URL}/partnership.png`} alt="Partnership Icon" className="nav-icon" />
           <span>Partnership</span>
         </li>
         <li
           className={`nav-item ${activeItem === 'connect' ? 'active' : ''}`}
           onClick={() => handleItemClick('Connect', null, '/support')}
         >
-          <img src={`${process.env.PUBLIC_URL}/support-icon.png`} alt="Support Icon" className="nav-icon" />
+          <img src={`${process.env.PUBLIC_URL}/connect.png`} alt="Support Icon" className="nav-icon" />
           <span>Connect</span>
         </li>
       </ul>

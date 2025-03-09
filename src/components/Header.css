@@ -158,16 +158,38 @@
   font-weight: bold;
 }
 
-/* Temporary toggle button for testing */
-.toggle-auth {
-  margin-left: 10px;
-  font-size: 12px;
-  padding: 5px;
-  background: #ccc;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.profile-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
+
+.logout-btn {
+  background: none;
+  border: 1px solid #f1f1f1; /* Add border for visibility */
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 5px 10px; /* Increase clickable area */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #572668;
+  color: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .logout-btn {
+    font-size: 12px;
+    padding: 3px 8px;
+  }
+}
+
+/* Existing styles remain */
 
 /* Responsive Design Updates */
 @media (max-width: 768px) {

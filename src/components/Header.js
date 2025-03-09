@@ -1,26 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 import './Header.css';
 
-// Header component with responsive hamburger menu
 const Header = ({ toggleNav }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
-
-  // Mock authentication state (replace with real auth later)
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Simulate logged-in state
-  const [user, setUser] = useState(null); // Mock user data
-
-  // Simulate sign-in/sign-up (for testing, toggle this manually or via SignIn/SignUp)
-  const handleSignInToggle = () => {
-    if (isAuthenticated) {
-      setIsAuthenticated(false);
-      setUser(null); // Logout
-    } else {
-      setIsAuthenticated(true);
-      setUser({ name: "John Doe", profilePic: `${process.env.PUBLIC_URL}/user3.png` }); // Mock user
-    }
-  };
+  const { isAuthenticated, user, logout } = useAuth();
 
   // Handle search submission
   const handleSearchSubmit = (e) => {
@@ -28,6 +14,12 @@ const Header = ({ toggleNav }) => {
     if (searchQuery.trim()) {
       navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
     }
+  };
+
+  // Handle logout
+  const handleLogout = () => {
+    logout();
+    navigate('/signin');
   };
 
   return (
@@ -66,21 +58,24 @@ const Header = ({ toggleNav }) => {
       </div>
       <div className="header-right">
         {isAuthenticated ? (
-          <Link to="/profile" className="profile-link">
-            <div className="profile-btn">
-              {user.profilePic ? (
-                <img
-                  src={user.profilePic}
-                  alt="Profile"
-                  className="profile-pic"
-                />
-              ) : (
-                <span className="profile-moniker">
-                  {user.name.charAt(0).toUpperCase()}
-                </span>
-              )}
-            </div>
-          </Link>
+          <div className="profile-container">
+            <Link to="/profile" className="profile-link">
+              <div className="profile-btn">
+                {user?.profilePic ? (
+                  <img
+                    src={user.profilePic}
+                    alt="Profile"
+                    className="profile-pic"
+                  />
+                ) : (
+                  <span className="profile-moniker">
+                    {user?.name?.charAt(0).toUpperCase() || 'U'}
+                  </span>
+                )}
+              </div>
+            </Link>
+            <button onClick={handleLogout} className="logout-btn">Logout</button>
+          </div>
         ) : (
           <Link to="/signin" className="signin-link">
             <button className="signin-btn">
@@ -93,10 +88,6 @@ const Header = ({ toggleNav }) => {
             </button>
           </Link>
         )}
-        {/* Temporary toggle button for testing */}
-        <button onClick={handleSignInToggle} className="toggle-auth">
-          Toggle Auth (Test)
-        </button>
       </div>
     </header>
   );

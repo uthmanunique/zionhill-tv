@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './components/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import VideoPreview from './components/VideoPreview';
 import ReelsPreview from './components/ReelsPreview';
@@ -16,22 +18,24 @@ import ForgotPassword from './components/ForgotPassword';
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/video/:id" element={<VideoPreview />} />
-          <Route path="/reels" element={<ReelsPreview />} />
-          <Route path="/live/:id" element={<LiveStreamPreview />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/partnership" element={<Partnership />} />
-          <Route path="/support" element={<Support />} />
-          <Route path="/zmc" element={<ZMC />} />
-          <Route path="/search" element={<SearchResults />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-        </Routes>
-      </div>
+      <AuthProvider>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/video/:id" element={<ProtectedRoute element={<VideoPreview />} />} />
+            <Route path="/reels" element={<ProtectedRoute element={<ReelsPreview />} />} />
+            <Route path="/live/:id" element={<ProtectedRoute element={<LiveStreamPreview />} />} />
+            <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
+            <Route path="/partnership" element={<ProtectedRoute element={<Partnership />} />} />
+            <Route path="/support" element={<ProtectedRoute element={<Support />} />} />
+            <Route path="/zmc" element={<ProtectedRoute element={<ZMC />} />} />
+            <Route path="/search" element={<ProtectedRoute element={<SearchResults />} />} />
+          </Routes>
+        </div>
+      </AuthProvider>
     </Router>
   );
 }
