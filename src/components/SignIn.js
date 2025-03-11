@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
+import axios from 'axios'; // Added axios
 import './SignIn.css';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(''); // Added for error handling
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Mock login logic (replace with API call later)
-    if (email && password) {
-      const mockUser = {
-        name: "John Doe",
-        email,
-        profilePic: `${process.env.PUBLIC_URL}/user3.png`,
-      };
-      login(mockUser);
-      navigate('/');
+    try {
+      const res = await axios.post('http://localhost:5000/api/auth/signin', { email, password });
+      login(res.data.user); // Update AuthContext with user data
+      localStorage.setItem('token', res.data.token); // Store JWT
+      navigate('/'); // Redirect to home
+    } catch (err) {
+      setError(err.response?.data?.message || 'Sign in failed'); // Display error
     }
   };
 
@@ -33,6 +33,7 @@ const SignIn = () => {
       <Link to="/" className="back-button">Back</Link>
       <div className="signin-frame">
         <h1 className="signin-title">Sign In</h1>
+        {error && <p className="error-message">{error}</p>} {/* Error display */}
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label className={`input-label ${email ? 'active' : ''}`} htmlFor="email">

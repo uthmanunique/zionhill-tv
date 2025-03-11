@@ -25,7 +25,7 @@ function App() {
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/video/:id" element={<ProtectedRoute element={<VideoPreview />} />} />
+            <Route path="/video-preview/:id" element={<ProtectedRoute element={<VideoPreview />} />} /> {/* Updated */}
             <Route path="/reels" element={<ProtectedRoute element={<ReelsPreview />} />} />
             <Route path="/live/:id" element={<ProtectedRoute element={<LiveStreamPreview />} />} />
             <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />

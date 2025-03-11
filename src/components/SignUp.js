@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
+import axios from 'axios'; // Added axios
 import './SignUp.css';
 
 const SignUp = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(''); // Added for error handling
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -14,17 +16,15 @@ const SignUp = () => {
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Mock signup logic (replace with API call later)
-    if (name && email && password) {
-      const mockUser = {
-        name,
-        email,
-        profilePic: `${process.env.PUBLIC_URL}/user2.png`,
-      };
-      login(mockUser); // Treat signup as immediate login for now
-      navigate('/');
+    try {
+      const res = await axios.post('http://localhost:5000/api/auth/signup', { name, email, password });
+      login(res.data.user); // Log in with returned user data
+      localStorage.setItem('token', res.data.token); // Store JWT
+      navigate('/'); // Redirect to home
+    } catch (err) {
+      setError(err.response?.data?.message || 'Sign up failed'); // Display error
     }
   };
 
@@ -35,6 +35,7 @@ const SignUp = () => {
       <Link to="/" className="back-button">Back</Link>
       <div className="signup-frame">
         <h1 className="signup-title">Sign Up</h1>
+        {error && <p className="error-message">{error}</p>} {/* Error display */}
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label className={`input-label ${name ? 'active' : ''}`} htmlFor="name">

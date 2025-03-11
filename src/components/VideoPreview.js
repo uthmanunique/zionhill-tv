@@ -1,33 +1,43 @@
-import React, { useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom'; // Added useNavigate, Link
+import axios from 'axios'; // Added axios
+import { useAuth } from './AuthContext'; // Added for auth check
 import Header from './Header';
 import Navigation from './Navigation';
-import './VideoPreview.css'; // Import associated styles
+import './VideoPreview.css';
 
-// Video Preview component
 const VideoPreview = () => {
-  const { id } = useParams(); // Get video ID from URL
-  const [isNavOpen, setIsNavOpen] = useState(false); // State for navigation toggle
-  const [likes, setLikes] = useState(120); // Mock like count
-  const [dislikes, setDislikes] = useState(5); // Mock dislike count
-  const [isPlaying, setIsPlaying] = useState(false); // Play/Pause state
-  const [volume, setVolume] = useState(1); // Volume level (0 to 1)
-  const [progress, setProgress] = useState(0); // Video progress (0 to 1)
-  const videoRef = useRef(null); // Reference to video element
+  const { id } = useParams();
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [video, setVideo] = useState(null); // Real video data
+  const [likes, setLikes] = useState(120); // Mock for now
+  const [dislikes, setDislikes] = useState(5); // Mock for now
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(1);
+  const [progress, setProgress] = useState(0);
+  const videoRef = useRef(null);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
-  // Toggle navigation visibility
-  const toggleNav = () => {
-    setIsNavOpen(!isNavOpen);
-  };
+  const toggleNav = () => setIsNavOpen(!isNavOpen);
 
-  // Handle Like/Dislike clicks
-  const handleLike = () => {
-    setLikes((prev) => prev + 1);
-  };
+  // Fetch video data on mount
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/signin');
+      return;
+    }
 
-  const handleDislike = () => {
-    setDislikes((prev) => prev + 1);
-  };
+    const token = localStorage.getItem('token');
+    axios.get(`http://localhost:5000/api/videos/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => setVideo(res.data))
+      .catch((err) => {
+        console.error('Fetch video error:', err);
+        navigate('/zmc'); // Redirect if video not found
+      });
+  }, [id, isAuthenticated, navigate]);
 
   // Video control handlers
   const togglePlay = () => {
@@ -40,8 +50,7 @@ const VideoPreview = () => {
   };
 
   const handleNext = () => {
-    // Placeholder: Logic to play next video can be added here
-    console.log("Next video clicked");
+    console.log("Next video clicked"); // Placeholder
   };
 
   const handleVolumeChange = (e) => {
@@ -70,14 +79,10 @@ const VideoPreview = () => {
     }
   };
 
-  // Mock video data (replace with dynamic data later)
-  const video = {
-    id,
-    title: "21 DAYS OF PRAYER & FASTING | DAY 17 | 22, JANUARY 2025 | FAITH TABERNACLE OTA.",
-    url: `${process.env.PUBLIC_URL}/test.mp4`, // Placeholder video
-  };
+  const handleLike = () => setLikes((prev) => prev + 1);
+  const handleDislike = () => setDislikes((prev) => prev + 1);
 
-  // Mock related videos data
+  // Mock related videos (replace with API later)
   const relatedVideos = [
     { id: 1, title: "HEALING AND MIRACLE SERVICE | 5 JANUARY", section: "Music", timestamp: "15 days ago", image: `${process.env.PUBLIC_URL}/message1.png` },
     { id: 2, title: "SUNDAY SERMON | LOVE", section: "Messages", timestamp: "2 weeks ago", image: `${process.env.PUBLIC_URL}/message2.png` },
@@ -89,24 +94,26 @@ const VideoPreview = () => {
     { id: 8, title: "PRAYER NIGHT | REVIVAL", section: "Messages", timestamp: "8 days ago", image: `${process.env.PUBLIC_URL}/message6.png` },
   ];
 
-  // Mock comments data
+  // Mock comments
   const comments = [
     { id: 1, user: "JohnDoe", text: "Amazing service, truly blessed!", timestamp: "2 hours ago" },
     { id: 2, user: "JaneSmith", text: "Powerful message, thank you!", timestamp: "1 day ago" },
   ];
+
+  if (!video) return <div className="video-preview"><Header toggleNav={toggleNav} /><p>Loading...</p></div>;
 
   return (
     <div className="video-preview">
       <Header toggleNav={toggleNav} />
       <Navigation isOpen={isNavOpen} />
       <main className="video-content">
-        {/* Video Player Section */}
         <div className={`video-player-container ${isNavOpen ? 'nav-open' : ''}`}>
           <div className="video-frame">
             <video
               ref={videoRef}
               className="video-player"
-              onTimeUpdate={handleProgress} // Update progress as video plays
+              onTimeUpdate={handleProgress}
+              controls={false} // Custom controls below
             >
               <source src={video.url} type="video/mp4" />
               Your browser does not support the video tag.
@@ -201,23 +208,25 @@ const VideoPreview = () => {
             ))}
           </div>
         </div>
-
-        {/* Related Videos Section */}
         <div className="related-videos">
           <h2 className="related-title">Related Videos</h2>
           <div className="related-container">
-            {relatedVideos.map((video) => (
-              <div key={video.id} className="related-video">
+            {relatedVideos.map((related) => (
+              <Link
+                key={related.id}
+                to={`/video-preview/${related.id}`} // Link to VideoPreview
+                className="related-video"
+              >
                 <div
                   className="related-image"
-                  style={{ backgroundImage: `url(${video.image})` }}
+                  style={{ backgroundImage: `url(${related.image})` }}
                 />
                 <div className="related-info">
-                  <p className="related-video-title">{video.title}</p>
-                  <p className="related-section">{video.section}</p>
-                  <p className="related-timestamp">{video.timestamp}</p>
+                  <p className="related-video-title">{related.title}</p>
+                  <p className="related-section">{related.section}</p>
+                  <p className="related-timestamp">{related.timestamp}</p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

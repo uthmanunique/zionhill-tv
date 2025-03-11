@@ -1,183 +1,196 @@
 /* ZMC screen styles */
 .zmc-screen {
-    min-height: 100vh;
-    background-color: #f5f5f5;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Main content area */
-  .zmc-content {
-    padding-top: 80px; /* Space for fixed header */
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 40px;
-    max-width: 1440px;
-    margin: 0 auto;
-    transition: padding-left 0.3s ease; /* Smooth shift with nav */
-  }
-  
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main content area */
+.zmc-content {
+  padding-top: 80px; /* Space for fixed header */
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+  transition: padding-left 0.3s ease;
+}
+
+.zmc-content.nav-open {
+  padding-left: 270px;
+}
+
+/* Purple header frame */
+.zmc-header-frame {
+  width: 100vw; /* Full viewport width to match Header */
+  height: 250px;
+  background-color: #572668;
+  position: relative;
+  display: flex;
+  align-items: flex-end; /* Align title to bottom */
+  justify-content: center;
+  overflow: hidden;
+  margin-left: calc(-50vw + 50%); /* Center within max-width parent */
+  margin-right: calc(-50vw + 50%);
+}
+
+/* ZMC header title */
+.zmc-header-title {
+  font-size: 36px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  z-index: 1;
+  margin-bottom: 20px; /* Space from bottom */
+}
+
+/* ZMC videos section */
+.zmc-videos-section {
+  margin-top: 20px;
+}
+
+/* Grid layout for videos */
+.zmc-videos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto; /* Center grid */
+}
+
+/* Video item (now a link) */
+.zmc-video-item {
+  flex: 0 0 400px;
+  height: 270px;
+  text-decoration: none; /* Remove underline from Link */
+  color: inherit; /* Inherit text color */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Video image */
+.zmc-video-image {
+  width: 400px;
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  transition: transform 0.2s; /* Hover effect */
+}
+
+.zmc-video-item:hover .zmc-video-image {
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* Video title */
+.zmc-video-title {
+  font-size: 14px;
+  color: #333;
+  margin: 10px 0 0 0;
+  text-align: left;
+  line-height: 1.4;
+  max-width: 400px;
+}
+
+/* Responsive Design */
+@media (max-width: 1440px) {
   .zmc-content.nav-open {
-    padding-left: 270px; /* Shifts right when nav opens */
+    padding-left: 270px;
   }
-  
-  /* Purple header frame */
-  .zmc-header-frame {
-    width: 100%;
-    height: 250px; /* Your specified height */
-    background-color: #572668; /* Purple background */
-    position: relative;
-    display: flex;
-    align-items:last baseline;
-    justify-content: center;
-    overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  .zmc-content {
+    padding-left: 20px;
   }
-  
-  /* ZMC header title */
-  .zmc-header-title {
-    font-size: 36px;
-    font-weight: bold;
-    color: #fff;
-    text-align: center;
-    z-index: 1; /* Above faded logo */
+
+  .zmc-content.nav-open {
+    padding-left: 220px;
   }
-  
-  /* ZMC videos section */
-  .zmc-videos-section {
-    margin-top: 20px;
-  }
-  
-  /* Grid layout for videos */
+
   .zmc-videos-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 per row */
-    gap: 20px;
-    width: 100%;
-    max-width: 1200px; /* Slightly less than 1440px for padding */
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  /* Video item */
+
   .zmc-video-item {
-    flex: 0 0 400px; /* Matches Recent Messages width */
-    height: 270px; /* Matches Recent Messages height + title */
+    flex: 0 0 300px;
+    height: 200px;
   }
-  
-  /* Video image */
+
   .zmc-video-image {
-    width: 400px; /* Matches Recent Messages */
-    height: 220px; /* Matches Recent Messages */
-    background-size: cover;
-    background-position: center;
-    border-radius: 8px;
+    width: 300px;
+    height: 165px;
   }
-  
-  /* Video title */
+
   .zmc-video-title {
-    font-size: 14px;
-    color: #333;
-    margin: 10px 0 0 0;
-    text-align: left;
-    line-height: 1.4;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .zmc-content.nav-open {
+    padding-left: 220px;
+  }
+
+  .zmc-header-title {
+    font-size: 30px;
+  }
+
+  .zmc-videos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .zmc-video-item {
+    flex: 0 0 400px;
+    height: 270px;
+  }
+
+  .zmc-video-image {
+    width: 400px;
+    height: 220px;
+  }
+
+  .zmc-video-title {
     max-width: 400px;
   }
-  
-  /* Responsive Design */
-  @media (max-width: 1440px) {
-    .zmc-content.nav-open {
-      padding-left: 270px;
-    }
+}
+
+@media (max-width: 480px) {
+  .zmc-content {
+    padding-left: 15px;
+    padding-right: 15px;
   }
-  
-  @media (max-width: 1024px) {
-    .zmc-content {
-      padding-left: 20px;
-    }
-  
-    .zmc-content.nav-open {
-      padding-left: 220px;
-    }
-  
-    .zmc-videos-grid {
-      grid-template-columns: repeat(2, 1fr); /* 2 per row */
-    }
-  
-    .zmc-video-item {
-      flex: 0 0 300px;
-      height: 200px;
-    }
-  
-    .zmc-video-image {
-      width: 300px;
-      height: 165px;
-    }
-  
-    .zmc-video-title {
-      max-width: 300px;
-    }
+
+  .zmc-content.nav-open {
+    padding-left: 195px;
   }
-  
-  @media (max-width: 768px) {
-    .zmc-content.nav-open {
-      padding-left: 220px;
-    }
-  
-    .zmc-header-title {
-      font-size: 30px;
-    }
-  
-    .zmc-videos-grid {
-      grid-template-columns: 1fr; /* 1 per row */
-    }
-  
-    .zmc-video-item {
-      flex: 0 0 400px;
-      height: 270px;
-    }
-  
-    .zmc-video-image {
-      width: 400px;
-      height: 220px;
-    }
-  
-    .zmc-video-title {
-      max-width: 400px;
-    }
+
+  .zmc-header-frame {
+    height: 200px;
   }
-  
-  @media (max-width: 480px) {
-    .zmc-content {
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-  
-    .zmc-content.nav-open {
-      padding-left: 195px;
-    }
-  
-    .zmc-header-frame {
-      height: 200px;
-    }
-  
-    .zmc-header-title {
-      font-size: 24px;
-    }
-  
-    .zmc-videos-grid {
-      grid-template-columns: 1fr;
-    }
-  
-    .zmc-video-item {
-      flex: 0 0 100%;
-      height: auto;
-    }
-  
-    .zmc-video-image {
-      width: 100%;
-      height: 150px;
-    }
-  
-    .zmc-video-title {
-      font-size: 12px;
-      max-width: 100%;
-    }
+
+  .zmc-header-title {
+    font-size: 24px;
   }
+
+  .zmc-videos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .zmc-video-item {
+    flex: 0 0 100%;
+    height: auto;
+  }
+
+  .zmc-video-image {
+    width: 100%;
+    height: 150px;
+  }
+
+  .zmc-video-title {
+    font-size: 12px;
+    max-width: 100%;
+  }
+}
