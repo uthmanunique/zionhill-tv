@@ -57,7 +57,7 @@ const ZMC = () => {
               videos.map((video) => (
                 <Link
                   key={video._id}
-                  to={`/video-preview/${video._id}`} // Link to VideoPreview with video ID
+                  to={`/video/${video._id}`} // Link to VideoPreview with video ID
                   className="zmc-video-item"
                 >
                   <div

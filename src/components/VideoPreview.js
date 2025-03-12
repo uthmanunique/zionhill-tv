@@ -1,45 +1,89 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom'; // Added useNavigate, Link
-import axios from 'axios'; // Added axios
-import { useAuth } from './AuthContext'; // Added for auth check
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
+import { useAuth } from './AuthContext';
 import Header from './Header';
 import Navigation from './Navigation';
 import './VideoPreview.css';
 
+console.log('VideoPreview component loaded');
+
 const VideoPreview = () => {
+  console.log('VideoPreview component rendering');
+
   const { id } = useParams();
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [video, setVideo] = useState(null); // Real video data
-  const [likes, setLikes] = useState(120); // Mock for now
-  const [dislikes, setDislikes] = useState(5); // Mock for now
+  const [video, setVideo] = useState(null);
+  const [likes, setLikes] = useState(0);
+  const [dislikes, setDislikes] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
   const [progress, setProgress] = useState(0);
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState('');
+  const [sortBy, setSortBy] = useState('newest');
+  const [relatedVideos, setRelatedVideos] = useState([]);
   const videoRef = useRef(null);
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const toggleNav = () => setIsNavOpen(!isNavOpen);
 
-  // Fetch video data on mount
   useEffect(() => {
+    console.log('useEffect running - isAuthenticated:', isAuthenticated);
     if (!isAuthenticated) {
+      console.log('Not authenticated, redirecting to /signin');
       navigate('/signin');
       return;
     }
 
     const token = localStorage.getItem('token');
-    axios.get(`http://localhost:5000/api/videos/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => setVideo(res.data))
-      .catch((err) => {
-        console.error('Fetch video error:', err);
-        navigate('/zmc'); // Redirect if video not found
-      });
+
+    const fetchVideo = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/api/videos/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log('API response (video):', res.data);
+        setVideo(res.data);
+        setLikes(res.data.likes || 0);
+        setDislikes(res.data.dislikes || 0);
+      } catch (err) {
+        console.error('Fetch video error:', err.response?.data || err.message);
+        navigate('/zmc');
+      }
+    };
+
+    const fetchRelatedVideos = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/videos', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log('API response (related videos):', res.data);
+        const filtered = res.data.filter(v => v._id !== id).slice(0, 8);
+        setRelatedVideos(filtered);
+      } catch (err) {
+        console.error('Fetch related videos error:', err.response?.data || err.message);
+      }
+    };
+
+    const fetchComments = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/api/videos/${id}/comments`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log('API response (comments):', res.data);
+        setComments(res.data);
+      } catch (err) {
+        console.error('Fetch comments error:', err.response?.data || err.message);
+      }
+    };
+
+    fetchVideo();
+    fetchRelatedVideos();
+    fetchComments();
   }, [id, isAuthenticated, navigate]);
 
-  // Video control handlers
   const togglePlay = () => {
     if (isPlaying) {
       videoRef.current.pause();
@@ -50,7 +94,7 @@ const VideoPreview = () => {
   };
 
   const handleNext = () => {
-    console.log("Next video clicked"); // Placeholder
+    console.log("Next video clicked");
   };
 
   const handleVolumeChange = (e) => {
@@ -79,28 +123,84 @@ const VideoPreview = () => {
     }
   };
 
-  const handleLike = () => setLikes((prev) => prev + 1);
-  const handleDislike = () => setDislikes((prev) => prev + 1);
+  const handleLike = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const res = await axios.post(`http://localhost:5000/api/videos/${id}/like`, {}, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log('Like response:', res.data);
+      setLikes(res.data.likes);
+    } catch (err) {
+      console.error('Like error:', err.response?.data || err.message);
+    }
+  };
 
-  // Mock related videos (replace with API later)
-  const relatedVideos = [
-    { id: 1, title: "HEALING AND MIRACLE SERVICE | 5 JANUARY", section: "Music", timestamp: "15 days ago", image: `${process.env.PUBLIC_URL}/message1.png` },
-    { id: 2, title: "SUNDAY SERMON | LOVE", section: "Messages", timestamp: "2 weeks ago", image: `${process.env.PUBLIC_URL}/message2.png` },
-    { id: 3, title: "SPORTS HIGHLIGHTS | FAITH CUP", section: "Sports", timestamp: "10 days ago", image: `${process.env.PUBLIC_URL}/message3.png` },
-    { id: 4, title: "WORSHIP MIX | PEACE", section: "Music", timestamp: "1 month ago", image: `${process.env.PUBLIC_URL}/message2.png` },
-    { id: 5, title: "NEWS UPDATE | CHARITY", section: "News", timestamp: "3 days ago", image: `${process.env.PUBLIC_URL}/message1.png` },
-    { id: 6, title: "DOCUMENTARY | MISSIONS", section: "Documentaries", timestamp: "20 days ago", image: `${process.env.PUBLIC_URL}/message5.png` },
-    { id: 7, title: "KIDS STORY | NOAH", section: "Kiddies", timestamp: "5 days ago", image: `${process.env.PUBLIC_URL}/message3.png` },
-    { id: 8, title: "PRAYER NIGHT | REVIVAL", section: "Messages", timestamp: "8 days ago", image: `${process.env.PUBLIC_URL}/message6.png` },
-  ];
+  const handleDislike = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const res = await axios.post(`http://localhost:5000/api/videos/${id}/dislike`, {}, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log('Dislike response:', res.data);
+      setDislikes(res.data.dislikes);
+    } catch (err) {
+      console.error('Dislike error:', err.response?.data || err.message);
+    }
+  };
 
-  // Mock comments
-  const comments = [
-    { id: 1, user: "JohnDoe", text: "Amazing service, truly blessed!", timestamp: "2 hours ago" },
-    { id: 2, user: "JaneSmith", text: "Powerful message, thank you!", timestamp: "1 day ago" },
-  ];
+  const handleShare = () => {
+    const videoUrl = `${window.location.origin}/video/${id}`;
+    if (navigator.share) {
+      navigator.share({
+        title: video.title,
+        text: `Check out this video: ${video.title}`,
+        url: videoUrl,
+      }).catch((err) => console.error('Share error:', err));
+    } else {
+      navigator.clipboard.writeText(videoUrl)
+        .then(() => alert('Video URL copied to clipboard!'))
+        .catch((err) => console.error('Clipboard error:', err));
+    }
+  };
 
-  if (!video) return <div className="video-preview"><Header toggleNav={toggleNav} /><p>Loading...</p></div>;
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    if (!newComment.trim()) return;
+
+    const token = localStorage.getItem('token');
+    try {
+      const res = await axios.post(`http://localhost:5000/api/videos/${id}/comments`, { text: newComment }, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log('Comment response:', res.data);
+      setComments([res.data, ...comments]);
+      setNewComment('');
+    } catch (err) {
+      console.error('Comment submit error:', err.response?.data || err.message);
+    }
+  };
+
+  const sortedComments = [...comments].sort((a, b) => {
+    if (sortBy === 'top') {
+      return (b.likes || 0) - (a.likes || 0);
+    } else {
+      return new Date(b.timestamp) - new Date(a.timestamp);
+    }
+  });
+
+  console.log('Video state:', video);
+  if (!video) {
+    console.log('Rendering loading state');
+    return (
+      <div className="video-preview">
+        <Header toggleNav={toggleNav} />
+        <div className="video-frame loading-frame">
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="video-preview">
@@ -113,7 +213,7 @@ const VideoPreview = () => {
               ref={videoRef}
               className="video-player"
               onTimeUpdate={handleProgress}
-              controls={false} // Custom controls below
+              controls={false}
             >
               <source src={video.url} type="video/mp4" />
               Your browser does not support the video tag.
@@ -132,16 +232,16 @@ const VideoPreview = () => {
                 <div className="left-controls">
                   <button onClick={togglePlay} className="control-button">
                     <img
-                      src={`${process.env.PUBLIC_URL}/${isPlaying ? 'pause-icon.png' : 'play-icon.png'}`}
+                      src={`${process.env.PUBLIC_URL}/${isPlaying ? 'pause.png' : 'Play.png'}`}
                       alt={isPlaying ? "Pause" : "Play"}
                       className="control-icon"
                     />
                   </button>
                   <button onClick={handleNext} className="control-button">
-                    <img src={`${process.env.PUBLIC_URL}/next-icon.png`} alt="Next" className="control-icon" />
+                    <img src={`${process.env.PUBLIC_URL}/next.png`} alt="Next" className="control-icon" />
                   </button>
                   <div className="volume-control">
-                    <img src={`${process.env.PUBLIC_URL}/volume-icon.png`} alt="Volume" className="control-icon" />
+                    <img src={`${process.env.PUBLIC_URL}/volume.png`} alt="Volume" className="control-icon" />
                     <input
                       type="range"
                       min="0"
@@ -155,13 +255,13 @@ const VideoPreview = () => {
                 </div>
                 <div className="right-controls">
                   <button className="control-button">
-                    <img src={`${process.env.PUBLIC_URL}/language-icon.png`} alt="Language" className="control-icon" />
+                    <img src={`${process.env.PUBLIC_URL}/language.png`} alt="Language" className="control-icon" />
                   </button>
                   <button className="control-button">
-                    <img src={`${process.env.PUBLIC_URL}/cast-icon.png`} alt="Cast" className="control-icon" />
+                    <img src={`${process.env.PUBLIC_URL}/cast.png`} alt="Cast" className="control-icon" />
                   </button>
                   <button onClick={toggleFullScreen} className="control-button">
-                    <img src={`${process.env.PUBLIC_URL}/fullscreen-icon.png`} alt="Full Screen" className="control-icon" />
+                    <img src={`${process.env.PUBLIC_URL}/full-screen.png`} alt="Full Screen" className="control-icon" />
                   </button>
                 </div>
               </div>
@@ -169,41 +269,65 @@ const VideoPreview = () => {
           </div>
           <h1 className="video-title">{video.title}</h1>
           <div className="video-actions">
-            <div className="action-item">
+            <div className="action-items">
               <img
-                src={`${process.env.PUBLIC_URL}/like-icon.png`}
+                src={`${process.env.PUBLIC_URL}/like.png`}
                 alt="Like"
                 className="action-icon"
                 onClick={handleLike}
               />
               <span>{likes}</span>
             </div>
-            <div className="action-item">
+            <div className="action-items">
               <img
-                src={`${process.env.PUBLIC_URL}/dislike-icon.png`}
+                src={`${process.env.PUBLIC_URL}/dislike.png`}
                 alt="Dislike"
                 className="action-icon"
                 onClick={handleDislike}
               />
               <span>{dislikes}</span>
             </div>
-            <div className="action-item">
-              <img src={`${process.env.PUBLIC_URL}/share-icon.png`} alt="Share" className="action-icon" />
+            <div className="action-items">
+              <img
+                src={`${process.env.PUBLIC_URL}/share.png`}
+                alt="Share"
+                className="action-icon"
+                onClick={handleShare}
+              />
               <span>Share</span>
             </div>
           </div>
           <div className="comments-section">
             <div className="comments-header">
               <span>{comments.length} Comments</span>
-              <select className="sort-by">
-                <option>Sort by: Top Comments</option>
-                <option>Sort by: Newest First</option>
+              <select className="sort-by" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                <option value="top">Sort by: Top Comments</option>
+                <option value="newest">Sort by: Newest First</option>
               </select>
             </div>
-            {comments.map((comment) => (
-              <div key={comment.id} className="comment">
-                <p><strong>{comment.user}</strong> <span>{comment.timestamp}</span></p>
-                <p>{comment.text}</p>
+            <form onSubmit={handleCommentSubmit} className="comment-form">
+              <textarea
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Add a comment..."
+                className="comment-input"
+              />
+              <button type="submit" className="comment-submit">Post</button>
+            </form>
+            {sortedComments.map((comment) => (
+              <div key={comment._id || comment.id} className="comment">
+                <div className="comment-user">
+                  <img
+                    src={comment.profilePic || `${process.env.PUBLIC_URL}/default-profile.png`}
+                    alt={comment.user}
+                    className="comment-profile-pic"
+                  />
+                  <div>
+                    <p><strong>{comment.user}</strong></p>
+                    <p className="comment-timestamp">{new Date(comment.timestamp).toLocaleString()}</p>
+                  </div>
+                </div>
+                <p className="comment-text">{comment.text}</p>
               </div>
             ))}
           </div>
@@ -213,8 +337,8 @@ const VideoPreview = () => {
           <div className="related-container">
             {relatedVideos.map((related) => (
               <Link
-                key={related.id}
-                to={`/video-preview/${related.id}`} // Link to VideoPreview
+                key={related._id}
+                to={`/video/${related._id}`}
                 className="related-video"
               >
                 <div
@@ -224,7 +348,7 @@ const VideoPreview = () => {
                 <div className="related-info">
                   <p className="related-video-title">{related.title}</p>
                   <p className="related-section">{related.section}</p>
-                  <p className="related-timestamp">{related.timestamp}</p>
+                  <p className="related-timestamp">{new Date(related.createdAt || Date.now()).toLocaleDateString()}</p>
                 </div>
               </Link>
             ))}

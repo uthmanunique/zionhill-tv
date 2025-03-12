@@ -4,6 +4,7 @@
   background-color: #f5f5f5;
   display: flex;
   flex-direction: column;
+  margin-top: 24px;
 }
 
 /* Main content area */
@@ -35,13 +36,26 @@
   border-radius: 8px;
   position: relative;
   overflow: hidden;
+  background: #000;
 }
 
 .video-player {
   width: 100%;
   height: 100%;
   border-radius: 8px;
+}
+
+/* Loading state */
+.loading-frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 820px;
+  height: 475px;
+  border-radius: 8px;
   background: #000;
+  color: #fff;
+  font-size: 18px;
 }
 
 /* Video controls */
@@ -50,16 +64,18 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 10px;
+  padding: 10px 20px;
   background: rgba(0, 0, 0, 0.7);
   color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .progress-bar {
   width: 100%;
   height: 4px;
   background: #572668;
-  margin-bottom: 10px;
   cursor: pointer;
 }
 
@@ -67,6 +83,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 .left-controls, .right-controls {
@@ -85,8 +102,10 @@
 .control-icon {
   width: 24px;
   height: 24px;
+  filter: brightness(0) invert(1);
 }
 
+/* Volume control */
 .volume-control {
   display: flex;
   align-items: center;
@@ -126,10 +145,19 @@
   cursor: pointer;
 }
 
+.action-icon.active {
+  filter: brightness(0) invert(1); /* White icon when active */
+}
+
+.action-items span {
+  color: #000;
+  font-size: 14px;
+}
+
 /* Comments section */
 .comments-section {
   background: #fff;
-  padding: 20px;
+  padding: 20px 40px;
   border-radius: 8px;
 }
 
@@ -137,6 +165,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
+  padding: 0 20px;
 }
 
 .sort-by {
@@ -144,25 +173,69 @@
   background: none;
   font-size: 14px;
   color: #666;
+  cursor: pointer;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.comment-input {
+  width: 100%;
+  min-height: 60px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.comment-submit {
+  align-self: flex-end;
+  padding: 8px 16px;
+  background-color: #572668;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.comment-submit:hover {
+  background-color: #451f55;
 }
 
 .comment {
   margin-bottom: 15px;
+  padding: 0 20px;
 }
 
-.comment p:first-child {
-  font-size: 14px;
+.comment-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 5px;
 }
 
-.comment p:first-child span {
-  color: #999;
-  font-size: 12px;
+.comment-profile-pic {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-.comment p:last-child {
+.comment-timestamp {
+  color: #999;
+  font-size: 12px;
+  margin: 0;
+}
+
+.comment-text {
   font-size: 14px;
   color: #333;
+  margin: 0;
 }
 
 /* Related Videos section */
@@ -197,12 +270,12 @@
   display: flex;
   gap: 15px;
   margin-bottom: 15px;
-  text-decoration: none; /* No underline on Link */
+  text-decoration: none;
   color: inherit;
 }
 
 .related-video:hover .related-image {
-  transform: scale(1.05); /* Hover effect */
+  transform: scale(1.05);
 }
 
 .related-image {
@@ -252,7 +325,7 @@
     padding-left: 220px;
   }
 
-  .video-frame {
+  .video-frame, .loading-frame {
     width: 100%;
     height: auto;
     max-width: 820px;
@@ -287,6 +360,10 @@
     height: 18px;
   }
 
+  .action-item span {
+    font-size: 13px;
+  }
+
   .volume-slider {
     width: 60px;
   }
@@ -307,6 +384,14 @@
   .related-section,
   .related-timestamp {
     font-size: 11px;
+  }
+
+  .comments-section {
+    padding: 15px 30px;
+  }
+
+  .comments-header, .comment-form, .comment {
+    padding: 0 15px;
   }
 }
 
@@ -333,12 +418,16 @@
     height: 16px;
   }
 
+  .action-item span {
+    font-size: 12px;
+  }
+
   .volume-slider {
     width: 50px;
   }
 
   .comments-section {
-    padding: 15px;
+    padding: 15px 20px;
   }
 
   .comments-header span {
@@ -349,11 +438,12 @@
     font-size: 12px;
   }
 
-  .comment p:first-child {
-    font-size: 12px;
+  .comment-profile-pic {
+    width: 24px;
+    height: 24px;
   }
 
-  .comment p:last-child {
+  .comment-text {
     font-size: 12px;
   }
 

@@ -3,14 +3,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #572668; /* Your specified background color */
-  padding: 10px 20px; /* Padding for spacing */
+  background-color: #572668;
+  padding: 10px 20px;
   width: 100%;
-  height: 80px; /* Increased height for better spacing */
-  position: fixed; /* Sticks to top */
+  height: 80px;
+  position: fixed;
   top: 0;
   left: 0;
-  z-index: 2000; /* Above navigation and hero */
+  z-index: 2000;
   box-sizing: border-box;
 }
 
@@ -18,7 +18,7 @@
 .header-left {
   display: flex;
   align-items: center;
-  gap: 15px; /* Space between hamburger and logo */
+  gap: 15px;
 }
 
 .hamburger {
@@ -29,29 +29,30 @@
 }
 
 .hamburger-icon {
-  height: 25px; /* Adjust based on your icon size */
+  height: 25px;
   width: 25px;
 }
 
 /* Logo styling */
 .logo {
-  height: 50px; /* Slightly larger to fit taller header */
+  height: 50px;
   width: auto;
 }
 
 /* Center section: Search bar */
 .header-center {
-  flex-grow: 1; /* Allows it to take available space */
+  flex-grow: 1;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .search-bar {
   position: relative;
-  width: 550px; /* Reduced from 610px */
-  height: 36px; /* Reduced from 40px */
+  width: 550px;
+  height: 36px;
   background-color: #fff;
-  border-radius: 8px; /* Your specified radius */
+  border-radius: 8px;
   display: flex;
   align-items: center;
   box-sizing: border-box;
@@ -60,18 +61,18 @@
 .search-input {
   border: none;
   outline: none;
-  width: calc(100% - 40px); /* Adjust for icon space */
+  width: calc(100% - 40px);
   height: 100%;
-  font-size: 14px; /* Slightly smaller font */
-  padding: 0 10px 0 15px; /* Left padding for text */
+  font-size: 14px;
+  padding: 0 10px 0 15px;
   background: transparent;
 }
 
 .search-icon {
-  height: 20px; /* Adjusted for smaller search bar */
+  height: 20px;
   width: 20px;
   position: absolute;
-  right: 10px; /* Inside the bar on the right */
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -87,63 +88,70 @@
   transform: translateY(-50%);
 }
 
-/* Right section: Sign In CTA */
+/* Right section: Sign In CTA and Profile */
 .header-right {
   display: flex;
   align-items: center;
-  margin-bottom: 18px;
 }
 
 .signin-link {
-  text-decoration: none; /* Remove underline */
+  text-decoration: none;
 }
 
 .signin-btn {
   display: flex;
   align-items: center;
-  gap: 6px; /* Reduced space between icon and text */
-  width: 100px; /* Reduced from 115px */
-  height: 36px; /* Reduced from 40px */
+  gap: 6px;
+  width: 100px;
+  height: 36px;
   background-color: #fff;
   border: none;
   border-radius: 8px;
-  font-size: 14px; /* Slightly smaller font */
-  color: #333; /* Default text color */
+  font-size: 14px;
+  color: #333;
   cursor: pointer;
   padding: 0 10px;
+  margin-bottom: 24px;
   box-sizing: border-box;
-  transition: background-color 0.3s ease, color 0.3s ease; /* Hover transition */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .signin-btn:hover {
-  background-color: #e0e0e0; /* Light grey on hover */
-  color: #572668; /* Purple text on hover */
+  background-color: #e0e0e0;
+  color: #572668;
 }
 
 .signin-icon {
-  height: 20px; /* Adjusted for smaller button */
+  height: 20px;
   width: 20px;
+}
+
+.profile-container {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .profile-link {
   text-decoration: none;
+  cursor: pointer;
 }
 
 .profile-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px; /* Matches signin-btn height */
+  width: 36px;
   height: 36px;
   background-color: #fff;
-  border-radius: 50%; /* Circular for profile */
+  border-radius: 50%;
   cursor: pointer;
   overflow: hidden;
   transition: background-color 0.3s ease;
 }
 
 .profile-btn:hover {
-  background-color: #e0e0e0; /* Light grey on hover */
+  background-color: #e0e0e0;
 }
 
 .profile-pic {
@@ -158,77 +166,100 @@
   font-weight: bold;
 }
 
-.profile-container {
+/* Profile Overlay */
+.profile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+  z-index: 2050; /* Below dropdown but above content */
+}
+
+/* Profile Dropdown */
+.profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  width: 200px;
+  padding: 10px;
+  z-index: 2100;
+}
+
+.profile-header {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
 }
 
-.logout-btn {
-  background: none;
-  border: 1px solid #f1f1f1; /* Add border for visibility */
-  border-radius: 4px;
-  color: #ffffff;
+.profile-header-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.profile-header:hover {
+  background-color: #f5f5f5; /* Hover effect */
+}
+
+.dropdown-profile-pic {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dropdown-username {
   font-size: 14px;
   font-weight: bold;
+  color: #333;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #ddd;
+  margin: 5px 0;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
   cursor: pointer;
-  padding: 5px 10px; /* Increase clickable area */
-  transition: background-color 0.3s ease, color 0.3s ease;
+  color: #333;
+  font-size: 14px;
 }
 
-.logout-btn:hover {
-  background-color: #572668;
-  color: #fff;
+.dropdown-item:hover {
+  background-color: #f5f5f5;
 }
 
-/* Responsive adjustments */
-@media (max-width: 480px) {
-  .logout-btn {
-    font-size: 12px;
-    padding: 3px 8px;
-  }
-}
-
-/* Existing styles remain */
-
-/* Responsive Design Updates */
-@media (max-width: 768px) {
-  .profile-btn {
-    width: 32px;
-    height: 32px;
-  }
-
-  .profile-moniker {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .profile-btn {
-    width: 30px;
-    height: 30px;
-  }
-
-  .profile-moniker {
-    font-size: 12px;
-  }
+.dropdown-icon {
+  width: 20px;
+  height: 20px;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .header {
     padding: 10px;
-    height: 70px; /* Slightly smaller on tablets */
+    height: 70px;
   }
 
   .search-bar {
-    width: 100%; /* Full width on smaller screens */
-    max-width: 350px; /* Reduced max width */
-    height: 32px; /* Smaller for tablets */
+    width: 100%;
+    max-width: 350px;
+    height: 32px;
   }
 
   .search-input {
-    width: calc(100% - 38px); /* Adjust for icon */
+    width: calc(100% - 38px);
     font-size: 13px;
   }
 
@@ -248,19 +279,32 @@
     width: 18px;
   }
 
+  .profile-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .profile-moniker {
+    font-size: 14px;
+  }
+
   .logo {
-    height: 40px; /* Adjust logo size */
+    height: 40px;
   }
 
   .hamburger-icon {
     height: 22px;
     width: 22px;
   }
+
+  .profile-dropdown {
+    width: 180px;
+  }
 }
 
 @media (max-width: 480px) {
   .header {
-    flex-wrap: wrap; /* Allow wrapping if needed */
+    flex-wrap: wrap;
     height: auto;
     padding: 5px;
   }
@@ -270,7 +314,7 @@
   }
 
   .header-center {
-    order: 2; /* Move search below on very small screens */
+    order: 2;
     width: 100%;
     margin: 10px 0;
   }
@@ -278,11 +322,11 @@
   .search-bar {
     width: 100%;
     max-width: none;
-    height: 30px; /* Even smaller for mobile */
+    height: 30px;
   }
 
   .search-input {
-    width: calc(100% - 36px); /* Adjust for icon */
+    width: calc(100% - 36px);
     font-size: 12px;
   }
 
@@ -292,7 +336,7 @@
   }
 
   .header-right {
-    order: 1; /* Keep Sign In at top right */
+    order: 1;
   }
 
   .signin-btn {
@@ -306,8 +350,40 @@
     width: 16px;
   }
 
+  .profile-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .profile-moniker {
+    font-size: 12px;
+  }
+
   .hamburger-icon {
     height: 20px;
     width: 20px;
+  }
+
+  .profile-dropdown {
+    width: 160px;
+  }
+
+  .dropdown-profile-pic {
+    width: 28px;
+    height: 28px;
+  }
+
+  .dropdown-username {
+    font-size: 12px;
+  }
+
+  .dropdown-item {
+    font-size: 12px;
+    padding: 6px 0;
+  }
+
+  .dropdown-icon {
+    width: 18px;
+    height: 18px;
   }
 }
