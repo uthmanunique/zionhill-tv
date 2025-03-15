@@ -1,12 +1,12 @@
-/* Partnership screen styles */
-.partnership-screen {
+/* Connect screen styles */
+.connect-screen {
   min-height: 100vh;
   background-color: #f5f5f5;
   display: flex;
   flex-direction: column;
 }
 
-.partnership-content {
+.connect-content {
   padding-top: 80px; /* Space for fixed header */
   flex-grow: 1;
   display: flex;
@@ -16,7 +16,7 @@
   margin-left: 0; /* No shift for navigation */
 }
 
-.partnership-title {
+.connect-title {
   font-size: 24px;
   font-weight: bold;
   color: #333;
@@ -24,30 +24,36 @@
   margin-bottom: 20px;
 }
 
-.account-frame {
+.connect-groups-grid {
   width: 100%;
-  max-width: 674px;
-  padding: 20px;
-  border: 2px solid #ccc;
-  border-radius: 16px;
-  background-color: #fff;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
   margin-bottom: 30px;
 }
 
-.account-title {
+.connect-group-card {
+  border: 2px solid #ccc;
+  border-radius: 16px;
+  background-color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.group-name {
   font-size: 18px;
   font-weight: bold;
   color: #333;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
-.account-details p {
-  font-size: 16px;
+.group-activities {
+  font-size: 14px;
   color: #666;
-  margin: 5px 0;
 }
 
-.partnership-form {
+.join-form {
   width: 100%;
   max-width: 674px;
   padding: 20px;
@@ -146,12 +152,16 @@
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-  .partnership-content {
+  .connect-content {
     padding-top: 70px;
   }
 
-  .account-frame,
-  .partnership-form {
+  .connect-groups-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    max-width: 800px;
+  }
+
+  .join-form {
     max-width: 500px;
   }
 
@@ -166,23 +176,34 @@
 }
 
 @media (max-width: 768px) {
-  .partnership-title {
+  .connect-title {
     font-size: 20px;
   }
 
-  .account-frame,
-  .partnership-form {
+  .connect-groups-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    max-width: 600px;
+  }
+
+  .connect-group-card {
+    padding: 15px;
+  }
+
+  .group-name {
+    font-size: 16px;
+  }
+
+  .group-activities {
+    font-size: 13px;
+  }
+
+  .join-form {
     max-width: 400px;
     padding: 15px;
   }
 
-  .account-title,
   .form-title {
     font-size: 16px;
-  }
-
-  .account-details p {
-    font-size: 14px;
   }
 
   .input-group {
@@ -216,29 +237,40 @@
 }
 
 @media (max-width: 480px) {
-  .partnership-content {
+  .connect-content {
     padding-top: 80px;
     padding: 10px;
   }
 
-  .partnership-title {
+  .connect-title {
     font-size: 18px;
   }
 
-  .account-frame,
-  .partnership-form {
+  .connect-groups-grid {
+    grid-template-columns: 1fr; /* Single column on mobile */
+    max-width: 100%;
+  }
+
+  .connect-group-card {
+    padding: 10px;
+  }
+
+  .group-name {
+    font-size: 14px;
+  }
+
+  .group-activities {
+    font-size: 12px;
+  }
+
+  .join-form {
     max-width: 100%;
     padding: 10px;
     border-radius: 12px;
   }
 
-  .account-title,
   .form-title {
     font-size: 14px;
-  }
-
-  .account-details p {
-    font-size: 12px;
   }
 
   .input-group {

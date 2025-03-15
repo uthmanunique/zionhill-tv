@@ -10,13 +10,11 @@ import Music from '../components/Music';
 import News from '../components/News';
 import Documentaries from '../components/Documentaries';
 import Kiddies from '../components/Kiddies';
-import './Home.css'; // Import associated styles
+import './Home.css';
 
-// Home screen component
 const Home = () => {
-  const [isNavOpen, setIsNavOpen] = useState(false); // State for navigation toggle
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
-  // Toggle navigation visibility
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
@@ -26,15 +24,15 @@ const Home = () => {
       <Header toggleNav={toggleNav} />
       <Navigation isOpen={isNavOpen} />
       <main className="home-content">
-        <Hero id="hero-section" navOpen={isNavOpen} />
-        <Reelz id="reelz-section" navOpen={isNavOpen} />
-        <RecentMessages id="recent-messages-section" navOpen={isNavOpen} />
-        <Messages id="messages-section" navOpen={isNavOpen} />
-        <Sports id="sports-section" navOpen={isNavOpen} />
-        <Music id="music-section" navOpen={isNavOpen} />
-        <News id="news-section" navOpen={isNavOpen} />
-        <Documentaries id="documentaries-section" navOpen={isNavOpen} />
-        <Kiddies id="kiddies-section" navOpen={isNavOpen} />
+        <Hero id="hero-section" />
+        <Reelz id="reelz-section" />
+        <RecentMessages id="recent-messages-section"/>
+        <Messages id="messages-section" />
+        <Sports id="sports-section" />
+        <Music id="music-section" />
+        <News id="news-section" />
+        <Documentaries id="documentaries-section" />
+        <Kiddies id="kiddies-section" />
       </main>
     </div>
   );

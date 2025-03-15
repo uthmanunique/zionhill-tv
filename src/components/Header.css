@@ -128,8 +128,7 @@
 
 .profile-container {
   position: relative;
-  display: flex;
-  align-items: center;
+  display: inline-block;
 }
 
 .profile-link {
@@ -137,64 +136,74 @@
   cursor: pointer;
 }
 
+/* Profile button */
 .profile-btn {
+  width: 40px; /* Fixed size for the frame */
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden; /* Ensures image stays within bounds */
+  border: 2px solid #572668; /* Consistent with Profile.css */
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  background-color: #fff;
-  border-radius: 50%;
   cursor: pointer;
-  overflow: hidden;
-  transition: background-color 0.3s ease;
 }
 
 .profile-btn:hover {
   background-color: #e0e0e0;
 }
 
+/* Profile image in the button */
 .profile-pic {
-  width: 100%;
+  width: 100%; /* Fits the container */
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Ensures image scales and crops properly */
+  border-radius: 50%; /* Keeps it circular */
 }
 
+/* Fallback moniker when no image */
 .profile-moniker {
-  font-size: 16px;
-  color: #333;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #572668;
+  color: #fff;
+  font-size: 18px;
   font-weight: bold;
 }
 
-/* Profile Overlay */
+/* Dropdown overlay */
 .profile-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
-  z-index: 2050; /* Below dropdown but above content */
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 }
 
-/* Profile Dropdown */
+
+/* Dropdown menu */
 .profile-dropdown {
   position: absolute;
-  top: 100%;
+  top: 50px; /* Adjust based on header height */
   right: 0;
-  background-color: #fff;
+  background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 250px;
+  z-index: 2000;
   padding: 10px;
-  z-index: 2100;
 }
 
+/* Profile header in dropdown */
 .profile-header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding-bottom: 10px;
+  padding: 10px;
   cursor: pointer;
 }
 
@@ -203,37 +212,41 @@
   color: inherit;
 }
 
+
 .profile-header:hover {
   background-color: #f5f5f5; /* Hover effect */
 }
 
+/* Profile image in dropdown */
 .dropdown-profile-pic {
-  width: 32px;
-  height: 32px;
+  width: 50px; /* Smaller size for dropdown */
+  height: 50px;
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: cover; /* Fits properly */
+  margin-right: 10px;
+  border: 2px solid #572668;
+}
+
+/* Dropdown username */
+.dropdown-info {
+  flex-grow: 1;
 }
 
 .dropdown-username {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   color: #333;
+  display: block;
 }
 
-.dropdown-divider {
-  height: 1px;
-  background-color: #ddd;
-  margin: 5px 0;
-}
 
+/* Dropdown items */
 .dropdown-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 0;
+  padding: 10px;
   cursor: pointer;
-  color: #333;
-  font-size: 14px;
+  transition: background-color 0.3s ease;
 }
 
 .dropdown-item:hover {
@@ -243,7 +256,25 @@
 .dropdown-icon {
   width: 20px;
   height: 20px;
+  margin-right: 10px;
 }
+
+.dropdown-item span {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Divider */
+.dropdown-divider {
+  height: 1px;
+  background-color: #ddd;
+  margin: 5px 0;
+}
+
+.dropdown-item:hover {
+  background-color: #f5f5f5;
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -280,12 +311,12 @@
   }
 
   .profile-btn {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
   }
 
   .profile-moniker {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .logo {
@@ -298,9 +329,24 @@
   }
 
   .profile-dropdown {
-    width: 180px;
+    width: 200px;
+    top: 45px;
+  }
+
+  .dropdown-profile-pic {
+    width: 40px;
+    height: 40px;
+  }
+
+  .dropdown-username {
+    font-size: 14px;
+  }
+
+  .dropdown-item span {
+    font-size: 13px;
   }
 }
+
 
 @media (max-width: 480px) {
   .header {
@@ -351,12 +397,12 @@
   }
 
   .profile-btn {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
   }
 
   .profile-moniker {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .hamburger-icon {
@@ -365,12 +411,13 @@
   }
 
   .profile-dropdown {
-    width: 160px;
+    width: 180px;
+    top: 40px;
   }
 
   .dropdown-profile-pic {
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
   }
 
   .dropdown-username {

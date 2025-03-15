@@ -1,48 +1,58 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; // Add this import
-import './RecentMessages.css'; // Import associated styles
+// src/components/Music.js
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import api from '../api';
+import './Music.css';
 
-// Recent Messages section component
 const Music = ({ navOpen }) => {
-  // Mock data for recent messages (replace with dynamic data later)
-  const messageData = [
-    { id: 1, title: "Sunday Sermon | Grace and Truth", image: `${process.env.PUBLIC_URL}/message1.png` },
-    { id: 2, title: "Midweek Teaching | Faith Foundations", image: `${process.env.PUBLIC_URL}/message2.png` },
-    { id: 3, title: "Special Event | Healing Service", image: `${process.env.PUBLIC_URL}/message3.png` },
-    { id: 4, title: "Guest Speaker | Hope Renewed", image: `${process.env.PUBLIC_URL}/message4.png` },
-    { id: 5, title: "Youth Service | Living Boldly", image: `${process.env.PUBLIC_URL}/message5.png` },
-    { id: 6, title: "Prayer Night | Divine Encounter", image: `${process.env.PUBLIC_URL}/message6.png` },
-    { id: 7, title: "Bible Study | John 3:16", image: `${process.env.PUBLIC_URL}/message3.png` },
-  ];
+  const [music, setMusic] = useState([]);
+
+  useEffect(() => {
+    const fetchMusic = async () => {
+      try {
+        const { data } = await api.get('/api/music');
+        setMusic(data.slice(0, 7));
+      } catch (err) {
+        console.error('Fetch music error:', err);
+      }
+    };
+    fetchMusic();
+  }, []);
 
   return (
-    <section className="recent-messages">
-      <h2 className="messages-title">Music</h2>
-      <div className={`messages-container ${navOpen ? 'nav-open' : ''}`}>
-        <div className="messages-row">
-          {messageData.slice(0, Math.ceil(messageData.length / 2)).map((message) => (
-            <div key={message.id} className="message-frame">
-                <Link to={`/video/${message.id}`}>
+    <section className="music">
+      <div className="section-header">
+        <h2 className="music-title">Music</h2>
+        <Link to="/music" className="see-all-link">
+          See All
+          <img
+            src={`${process.env.PUBLIC_URL}/arrow-right.png`}
+            alt="Arrow Right"
+            className="see-all-arrow"
+          />
+        </Link>
+      </div>
+      <div className={`music-container ${navOpen ? 'nav-open' : ''}`}>
+        <div className="music-row">
+          {music.slice(0, Math.ceil(music.length / 2)).map((item) => (
+            <Link to={`/video/${item._id}`} key={item._id} className="music-frame">
               <div
-                className="message-image"
-                style={{ backgroundImage: `url(${message.image})` }}
+                className="music-image"
+                style={{ backgroundImage: `url(${item.image})` }}
               />
-              </Link>
-              <p className="message-title">{message.title}</p>
-            </div>
+              <p className="music-title">{item.title}</p>
+            </Link>
           ))}
         </div>
-        <div className="messages-row">
-          {messageData.slice(Math.ceil(messageData.length / 2)).map((message) => (
-            <div key={message.id} className="message-frame">
-                <Link to={`/video/${message.id}`}>
+        <div className="music-row">
+          {music.slice(Math.ceil(music.length / 2)).map((item) => (
+            <Link to={`/video/${item._id}`} key={item._id} className="music-frame">
               <div
-                className="message-image"
-                style={{ backgroundImage: `url(${message.image})` }}
+                className="music-image"
+                style={{ backgroundImage: `url(${item.image})` }}
               />
-              </Link>
-              <p className="message-title">{message.title}</p>
-            </div>
+              <p className="music-title">{item.title}</p>
+            </Link>
           ))}
         </div>
       </div>

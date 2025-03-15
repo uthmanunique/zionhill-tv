@@ -1,57 +1,71 @@
-import React, { useState } from 'react';
-import Header from '../components/Header';
-import Navigation from '../components/Navigation';
-import api from '../api'; // Import API client
-import './Partnership.css';
+import React, { useState, useEffect } from 'react';
+import Header from './Header';
+import Navigation from './Navigation';
+import api from '../api';
+import './Connect.css';
 
-const Partnership = () => {
+const Connect = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [notes, setNotes] = useState('');
+  const [group, setGroup] = useState('');
+  const [address, setAddress] = useState('');
+  const [connectGroups, setConnectGroups] = useState([]);
 
   const toggleNav = () => setIsNavOpen(!isNavOpen);
 
   const handleNameChange = (e) => setName(e.target.value);
   const handlePhoneChange = (e) => setPhone(e.target.value);
-  const handleEmailChange = (e) => setEmail(e.target.value);
-  const handleNotesChange = (e) => setNotes(e.target.value);
+  const handleGroupChange = (e) => setGroup(e.target.value);
+  const handleAddressChange = (e) => setAddress(e.target.value);
 
-  const isSubmitActive = name.trim() !== '' && phone.trim() !== '' && email.trim() !== '' && notes.trim() !== '';
+  const isSubmitActive = name.trim() !== '' && phone.trim() !== '' && group.trim() !== '' && address.trim() !== '';
+
+  // Fetch connect groups on mount
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const { data } = await api.get('/connect/groups');
+        setConnectGroups(data);
+      } catch (err) {
+        console.error('Fetch connect groups error:', err);
+        alert('Failed to load connect groups');
+      }
+    };
+    fetchGroups();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/partnership', { name, phone, email, notes }); // Removed unused 'data'
-      alert('Partnership request submitted successfully');
+      await api.post('/connect/join', { name, phone, groupName: group, address }); // Removed unused 'data'
+      alert('Join request submitted successfully');
       setName('');
       setPhone('');
-      setEmail('');
-      setNotes('');
+      setGroup('');
+      setAddress('');
     } catch (err) {
-      console.error('Partnership submit error:', err);
-      alert('Failed to submit partnership request');
+      console.error('Join request error:', err);
+      alert('Failed to submit join request');
     }
   };
 
   return (
-    <div className="partnership-screen">
+    <div className="connect-screen">
       <Header toggleNav={toggleNav} />
       <Navigation isOpen={isNavOpen} />
-      <main className="partnership-content">
-        <h1 className="partnership-title">Partnership</h1>
-        <div className="account-frame">
-          <h2 className="account-title">Account Details</h2>
-          <div className="account-details">
-            <p><strong>Bank:</strong> Zionhill Bank</p>
-            <p><strong>Account Number:</strong> 1234-5678-9012</p>
-            <p><strong>Routing Number:</strong> 987654321</p>
-            <p><strong>Swift Code:</strong> ZHBNUS33</p>
-          </div>
+      <main className="connect-content">
+        <h1 className="connect-title">Connect Group</h1>
+        <div className="connect-groups-grid">
+          {connectGroups.map((group, index) => (
+            <div key={index} className="connect-group-card">
+              <h2 className="group-name">{group.name}</h2>
+              <p className="group-activities">{group.activities}</p>
+            </div>
+          ))}
         </div>
-        <div className="partnership-form">
-          <h2 className="form-title">Partnership Form</h2>
+        <div className="join-form">
+          <h2 className="form-title">Join A Connect Group</h2>
           <form onSubmit={handleSubmit}>
             <div className="input-group">
               <label className={`input-label ${name ? 'active' : ''}`} htmlFor="name">
@@ -84,30 +98,30 @@ const Partnership = () => {
               </div>
             </div>
             <div className="input-group">
-              <label className={`input-label ${email ? 'active' : ''}`} htmlFor="email">
-                Email Address
+              <label className={`input-label ${group ? 'active' : ''}`} htmlFor="group">
+                Name of Connect Group
               </label>
               <div className="input-wrapper">
-                <img src={`${process.env.PUBLIC_URL}/sms.png`} alt="Email Icon" className="input-icon" />
+                <img src={`${process.env.PUBLIC_URL}/connect.png`} alt="Group Icon" className="input-icon" />
                 <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={handleEmailChange}
+                  type="text"
+                  id="group"
+                  value={group}
+                  onChange={handleGroupChange}
                   className="input-field"
                 />
               </div>
             </div>
             <div className="input-group">
-              <label className={`input-label ${notes ? 'active' : ''}`} htmlFor="notes">
-                Notes
+              <label className={`input-label ${address ? 'active' : ''}`} htmlFor="address">
+                Home Address
               </label>
               <div className="input-wrapper">
-                <img src={`${process.env.PUBLIC_URL}/note.png`} alt="Notes Icon" className="input-icon" />
+                <img src={`${process.env.PUBLIC_URL}/house.png`} alt="Address Icon" className="input-icon" />
                 <textarea
-                  id="notes"
-                  value={notes}
-                  onChange={handleNotesChange}
+                  id="address"
+                  value={address}
+                  onChange={handleAddressChange}
                   className="input-field textarea"
                 />
               </div>
@@ -127,4 +141,4 @@ const Partnership = () => {
   );
 };
 
-export default Partnership;
+export default Connect;

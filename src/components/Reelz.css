@@ -9,7 +9,7 @@
     font-size: 24px;
     font-weight: bold;
     color: #333;
-    margin: 0 0 20px 250px; /* Aligns with nav width, matches Recent Messages */
+    margin: 0 0 20px 20px; /* Aligns with nav width, matches Recent Messages */
   }
   
   /* Reelz container (scrollable horizontally) */
@@ -17,7 +17,7 @@
     display: flex;
     gap: 20px; /* Space between frames */
     overflow-x: auto; /* Enables horizontal scrolling */
-    padding-left: 250px; /* Aligns with nav width, matches Recent Messages */
+    padding-left: 20px; /* Aligns with nav width, matches Recent Messages */
     padding-right: 20px; /* Right padding */
     scroll-behavior: smooth; /* Smooth scrolling */
     -webkit-overflow-scrolling: touch; /* Smooth touch scrolling on mobile */

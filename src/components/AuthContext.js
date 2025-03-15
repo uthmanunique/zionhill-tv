@@ -1,43 +1,25 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import axios from 'axios'; // Added axios
+// AuthContext.js
+import React, { createContext, useContext } from 'react';
+import { userStore } from '../userStore';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      axios.get('http://localhost:5000/api/auth/user', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => {
-          setUser(res.data); // Set real user data
-          setIsAuthenticated(true);
-        })
-        .catch(() => {
-          localStorage.removeItem('token'); // Clear invalid token
-          setIsAuthenticated(false);
-          setUser(null);
-        });
-    }
+  // Initialize user data when the app loads
+  React.useEffect(() => {
+    userStore.initialize();
   }, []);
 
-  const login = (userData) => {
-    setIsAuthenticated(true);
-    setUser(userData);
-  };
-
-  const logout = () => {
-    setIsAuthenticated(false);
-    setUser(null);
-    localStorage.removeItem('token');
-  };
-
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        isAuthenticated: userStore.isAuthenticated,
+        login: userStore.login,
+        logout: userStore.logout,
+        updateUser: userStore.updateUser,
+        getUser: userStore.getUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

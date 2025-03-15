@@ -9,12 +9,12 @@
   font-size: 24px;
   font-weight: bold;
   color: #333;
-  margin: 0 0 20px 250px; /* Aligns with nav width */
+  margin: 0 0 20px 20px; /* Aligns with nav width */
 }
 
 /* Documentaries container (scrollable horizontally) */
 .documentaries-container {
-  padding-left: 250px; /* Aligns with nav width */
+  padding-left: 20px; /* Aligns with nav width */
   padding-right: 20px; /* Right padding */
   overflow-x: auto; /* Enables horizontal scrolling */
   scroll-behavior: smooth; /* Smooth scrolling */

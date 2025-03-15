@@ -9,12 +9,12 @@
     font-size: 24px;
     font-weight: bold;
     color: #333;
-    margin: 0 0 20px 250px; /* Aligns with nav width */
+    margin: 0 0 20px 20px; /* Aligns with nav width */
   }
   
   /* Messages container (scrollable horizontally) */
   .messages-container {
-    padding-left: 250px; /* Aligns with nav width */
+    padding-left: 20px; /* Aligns with nav width */
     padding-right: 20px; /* Right padding */
     overflow-x: auto; /* Enables horizontal scrolling */
     scroll-behavior: smooth; /* Smooth scrolling */
@@ -62,6 +62,30 @@
     line-height: 1.4;
     max-width: 400px; /* Matches frame width */
   }
+
+  /* src/components/RecentMessages.css */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 20px 20px;
+}
+
+.see-all-link {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #572668;
+  text-decoration: none;
+  font-weight: 500;
+  margin-right: 20px;
+}
+
+.see-all-arrow {
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+}
   
   /* Responsive Design */
   @media (max-width: 1440px) {

@@ -1,28 +1,30 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
-import axios from 'axios'; // Added axios
+import api from '../api';
 import './SignIn.css';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(''); // Added for error handling
+  const [error, setError] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  const handleSubmit = async (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/signin', { email, password });
-      login(res.data.user); // Update AuthContext with user data
-      localStorage.setItem('token', res.data.token); // Store JWT
-      navigate('/'); // Redirect to home
+      const { data } = await api.post('/auth/signin', { email, password });
+      login(data.token);
+      localStorage.setItem('token', data.token); // Ensure token is stored
+      navigate('/profile');
+      setError(''); // Clear error on success
     } catch (err) {
-      setError(err.response?.data?.message || 'Sign in failed'); // Display error
+      console.error('Signin error:', err);
+      setError(err.response?.data?.message || 'Sign in failed');
     }
   };
 
@@ -33,8 +35,8 @@ const SignIn = () => {
       <Link to="/" className="back-button">Back</Link>
       <div className="signin-frame">
         <h1 className="signin-title">Sign In</h1>
-        {error && <p className="error-message">{error}</p>} {/* Error display */}
-        <form onSubmit={handleSubmit}>
+        {error && <p className="error-message">{error}</p>}
+        <form onSubmit={handleSignIn}> {/* Use handleSignIn */}
           <div className="input-group">
             <label className={`input-label ${email ? 'active' : ''}`} htmlFor="email">
               Email

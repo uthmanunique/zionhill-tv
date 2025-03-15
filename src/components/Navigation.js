@@ -1,34 +1,29 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // No Link needed here
-import './Navigation.css'; // Import associated styles
-import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from 'react-icons/fa'; // Import social media icons
+import { useNavigate } from 'react-router-dom';
+import './Navigation.css';
+import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from 'react-icons/fa';
 
-// Navigation panel component
 const Navigation = ({ isOpen }) => {
-  const [activeItem, setActiveItem] = useState(null); // Track active menu item
-  const navigate = useNavigate(); // For programmatic navigation
+  const [activeItem, setActiveItem] = useState(null);
+  const navigate = useNavigate();
 
-  // Handle menu item click with scrolling or routing
   const handleItemClick = (item, sectionId, route) => {
     setActiveItem(item);
     if (sectionId) {
-      // Scroll to section on Home page
-      navigate('/'); // Ensure we’re on Home
+      navigate('/');
       setTimeout(() => {
         const section = document.getElementById(sectionId);
         if (section) {
           section.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 100); // Small delay to ensure navigation completes
+      }, 100);
     } else if (route) {
-      // Navigate to a separate route
       navigate(route);
     }
   };
 
   return (
     <nav className={`navigation ${isOpen ? 'open' : ''}`}>
-      {/* Main menu items */}
       <ul className="nav-menu">
         <li
           className={`nav-item ${activeItem === 'home' ? 'active' : ''}`}
@@ -81,14 +76,20 @@ const Navigation = ({ isOpen }) => {
         </li>
         <li
           className={`nav-item ${activeItem === 'connect' ? 'active' : ''}`}
-          onClick={() => handleItemClick('Connect', null, '/support')}
+          onClick={() => handleItemClick('connect', null, '/connect-screen')}
         >
           <img src={`${process.env.PUBLIC_URL}/connect.png`} alt="Support Icon" className="nav-icon" />
           <span>Connect</span>
         </li>
+        <li
+          className={`nav-item ${activeItem === 'praise-report' ? 'active' : ''}`}
+          onClick={() => handleItemClick('praise-report', null, '/praise-report')}
+        >
+          <img src={`${process.env.PUBLIC_URL}/praise.png`} alt="Praise Report Icon" className="nav-icon" />
+          <span>Praise Report</span>
+        </li>
       </ul>
 
-      {/* Footer section */}
       <div className="nav-footer">
         <ul className="footer-links">
           <li><button className="footer-btn" onClick={() => navigate('/contact')}>Contact</button></li>

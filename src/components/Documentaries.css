@@ -1,20 +1,20 @@
-/* Messages section styles */
-.messages {
+/* documentaries section styles */
+.documentaries {
     padding: 40px 20px; /* Space above and below */
     background-color: #f5f5f5; /* Matches home background */
   }
   
-  /* Messages title */
-  .messages-title {
+  /* documentaries title */
+  .documentaries-title {
     font-size: 24px;
     font-weight: bold;
     color: #333;
-    margin: 0 0 20px 250px; /* Aligns with nav width */
+    margin: 0 0 20px 20px; /* Aligns with nav width */
   }
   
-  /* Messages container (scrollable horizontally) */
-  .messages-container {
-    padding-left: 250px; /* Aligns with nav width */
+  /* documentaries container (scrollable horizontally) */
+  .documentaries-container {
+    padding-left: 20px; /* Aligns with nav width */
     padding-right: 20px; /* Right padding */
     overflow-x: auto; /* Enables horizontal scrolling */
     scroll-behavior: smooth; /* Smooth scrolling */
@@ -22,30 +22,30 @@
   }
   
   /* Hide scrollbar for cleaner look */
-  .messages-container::-webkit-scrollbar {
+  .documentaries-container::-webkit-scrollbar {
     display: none;
   }
   
-  .messages-container {
+  .documentaries-container {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
   
-  /* Messages row */
-  .messages-row {
+  /* documentaries row */
+  .documentaries-row {
     display: flex;
     gap: 20px; /* Space between frames */
     margin-bottom: 20px; /* Space between rows */
   }
   
-  /* Message frame */
-  .message-frame {
+  /* documentaries frame */
+  .documentaries-frame {
     flex: 0 0 400px; /* Fixed width, no shrinking */
     height: 270px; /* Height + title space */
   }
   
-  /* Message image */
-  .message-image {
+  /* documentaries image */
+  .documentaries-image {
     width: 400px; /* Landscape width */
     height: 220px; /* Landscape height */
     background-size: cover;
@@ -53,8 +53,8 @@
     border-radius: 8px; /* Consistent radius */
   }
   
-  /* Message title */
-  .message-title {
+  /* documentaries title */
+  .documentaries-title {
     font-size: 14px;
     color: #333;
     margin: 10px 0 0 0;
@@ -65,76 +65,76 @@
   
   /* Responsive Design */
   @media (max-width: 1440px) {
-    .messages-title {
+    .documentaries-title {
       margin-left: 20px; /* Reset when nav is collapsed */
     }
   
-    .messages-container {
+    .documentaries-container {
       padding-left: 20px; /* Reset when nav is collapsed */
     }
   
-    .messages-container.nav-open {
+    .documentaries-container.nav-open {
       padding-left: 270px; /* Shift when nav is open */
     }
   }
   
   @media (max-width: 768px) {
-    .messages-title {
+    .documentaries-title {
       font-size: 20px;
       margin-left: 20px;
     }
   
-    .messages-container {
+    .documentaries-container {
       padding-left: 20px;
       gap: 15px;
     }
   
-    .messages-container.nav-open {
+    .documentaries-container.nav-open {
       padding-left: 220px; /* Matches tablet nav width */
     }
   
-    .message-frame {
+    .documentaries-frame {
       flex: 0 0 300px;
       height: 200px;
     }
   
-    .message-image {
+    .documentaries-image {
       width: 300px;
       height: 165px;
     }
   
-    .message-title {
+    .documentaries-title {
       font-size: 13px;
       max-width: 300px;
     }
   }
   
   @media (max-width: 480px) {
-    .messages-title {
+    .documentaries-title {
       font-size: 18px;
       margin-left: 15px;
     }
   
-    .messages-container {
+    .documentaries-container {
       padding-left: 15px;
       gap: 10px;
     }
   
-    .messages-container.nav-open {
+    .documentaries-container.nav-open {
       padding-left: 195px; /* Matches mobile nav width */
     }
   
-    .message-frame {
+    .documentaries-frame {
       flex: 0 0 220px;
       height: 150px;
     }
   
-    .message-image {
+    .documentaries-image {
       width: 220px;
       height: 120px;
     }
   
-    .message-title {
+    .documentaries-title {
       font-size: 12px;
       max-width: 220px;
     }

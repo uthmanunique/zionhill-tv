@@ -10,10 +10,11 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Profile from './components/Profile';
 import Partnership from './components/Partnership';
-import Support from './components/Support';
+import Connect from './components/Connect';
 import ZMC from './components/ZMC';
 import SearchResults from './components/SearchResults';
 import ForgotPassword from './components/ForgotPassword';
+import PraiseReport from './components/PraiseReport';
 
 function App() {
   return (
@@ -30,9 +31,10 @@ function App() {
             <Route path="/live/:id" element={<ProtectedRoute element={<LiveStreamPreview />} />} />
             <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
             <Route path="/partnership" element={<ProtectedRoute element={<Partnership />} />} />
-            <Route path="/support" element={<ProtectedRoute element={<Support />} />} />
+            <Route path="/connect-screen" element={<ProtectedRoute element={<Connect />} />} />
             <Route path="/zmc" element={<ProtectedRoute element={<ZMC />} />} />
             <Route path="/search" element={<ProtectedRoute element={<SearchResults />} />} />
+            <Route path="/praise-report" element={<ProtectedRoute element={<PraiseReport />} />} />
           </Routes>
         </div>
       </AuthProvider>

@@ -1,43 +1,58 @@
-import React from 'react';
-import './Documentaries.css'; // Import associated styles
+// src/components/Documentaries.js
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import api from '../api'; // Ensure this is your axios instance
+import './Documentaries.css';
 
-// Messages section component
-const Messages = ({ navOpen }) => {
-  // Mock data for messages (replace with dynamic data later)
-  const messageData = [
-    { id: 1, title: "Sunday Sermon | Love and Peace", image: `${process.env.PUBLIC_URL}/messages-1.jpg` },
-    { id: 2, title: "Midweek Prayer | Strength", image: `${process.env.PUBLIC_URL}/messages-2.jpg` },
-    { id: 3, title: "Special Service | Revival", image: `${process.env.PUBLIC_URL}/messages-3.jpg` },
-    { id: 4, title: "Guest Preacher | Salvation", image: `${process.env.PUBLIC_URL}/messages-4.jpg` },
-    { id: 5, title: "Youth Talk | Purpose", image: `${process.env.PUBLIC_URL}/messages-5.jpg` },
-    { id: 6, title: "Evening Worship | Joy", image: `${process.env.PUBLIC_URL}/messages-6.jpg` },
-    { id: 7, title: "Bible Study | Faith", image: `${process.env.PUBLIC_URL}/messages-7.jpg` },
-  ];
+const Documentaries = ({ navOpen }) => {
+  const [documentaries, setDocumentaries] = useState([]);
+
+  useEffect(() => {
+    const fetchDocumentaries = async () => {
+      try {
+        const { data } = await api.get('/api/documentaries');
+        setDocumentaries(data.slice(0, 8)); // Limit to 8 items
+      } catch (err) {
+        console.error('Fetch recent documentaries error:', err);
+      }
+    };
+    fetchDocumentaries();
+  }, []);
 
   return (
-    <section className="messages">
-      <h2 className="messages-title">Documentaries</h2>
-      <div className={`messages-container ${navOpen ? 'nav-open' : ''}`}>
-        <div className="messages-row">
-          {messageData.slice(0, Math.ceil(messageData.length / 2)).map((message) => (
-            <div key={message.id} className="message-frame">
+    <section className="documentaries">
+      <div className="section-header">
+        <h2 className="documentaries-title">Documentaries</h2>
+        <Link to="/documentaries" className="see-all-link">
+          See All
+          <img
+            src={`${process.env.PUBLIC_URL}/arrowright.png`}
+            alt="Arrow Right"
+            className="see-all-arrow"
+          />
+        </Link>
+      </div>
+      <div className={`documentaries-container ${navOpen ? 'nav-open' : ''}`}>
+        <div className="documentaries-row">
+          {documentaries.slice(0, Math.ceil(documentaries.length / 2)).map((documentaries) => (
+            <Link to={`/video/${documentaries._id}`} key={documentaries._id} className="documentaries-frame">
               <div
-                className="message-image"
-                style={{ backgroundImage: `url(${message.image})` }}
+                className="documentaries-image"
+                style={{ backgroundImage: `url(${documentaries.image})` }}
               />
-              <p className="message-title">{message.title}</p>
-            </div>
+              <p className="documentaries-title">{documentaries.title}</p>
+            </Link>
           ))}
         </div>
-        <div className="messages-row">
-          {messageData.slice(Math.ceil(messageData.length / 2)).map((message) => (
-            <div key={message.id} className="message-frame">
+        <div className="documentaries-row">
+          {documentaries.slice(Math.ceil(documentaries.length / 2)).map((doumentaries) => (
+            <Link to={`/video/${documentaries._id}`} key={documentaries._id} className="documentaries-frame">
               <div
-                className="message-image"
-                style={{ backgroundImage: `url(${message.image})` }}
+                className="documentaries-image"
+                style={{ backgroundImage: `url(${documentaries.image})` }}
               />
-              <p className="message-title">{message.title}</p>
-            </div>
+              <p className="documentaries-title">{documentaries.title}</p>
+            </Link>
           ))}
         </div>
       </div>
@@ -45,4 +60,4 @@ const Messages = ({ navOpen }) => {
   );
 };
 
-export default Messages;
+export default Documentaries;

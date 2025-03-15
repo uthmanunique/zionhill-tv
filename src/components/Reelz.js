@@ -5,12 +5,12 @@ import './Reelz.css'; // Import associated styles
 // Reelz section component
 const Reelz = ({ navOpen }) => {
   const reelData = [
-    { id: 1, title: "Ultimate Worship Mix | Church of God", image: `${process.env.PUBLIC_URL}/reel-1.jpg` },
-    { id: 2, title: "Sermon Highlights | Faith Journey", image: `${process.env.PUBLIC_URL}/reel-2.jpg` },
-    { id: 3, title: "Praise Session | Zionhill Live", image: `${process.env.PUBLIC_URL}/reel-3.jpg` },
-    { id: 4, title: "Daily Devotion | Morning Prayer", image: `${process.env.PUBLIC_URL}/reel-4.jpg` },
-    { id: 5, title: "Gospel Hits | Sunday Service", image: `${process.env.PUBLIC_URL}/reel-5.jpg` },
-    { id: 6, title: "Testimony Time | Grace Stories", image: `${process.env.PUBLIC_URL}/reel-6.jpg` },
+    { id: 1, title: "Ultimate Worship Mix | Church of God", image: `${process.env.PUBLIC_URL}/reel1.png` },
+    { id: 2, title: "Sermon Highlights | Faith Journey", image: `${process.env.PUBLIC_URL}/reel2.png` },
+    { id: 3, title: "Praise Session | Zionhill Live", image: `${process.env.PUBLIC_URL}/reel5.png` },
+    { id: 4, title: "Daily Devotion | Morning Prayer", image: `${process.env.PUBLIC_URL}/reel3.png` },
+    { id: 5, title: "Gospel Hits | Sunday Service", image: `${process.env.PUBLIC_URL}/reel4.png` },
+    { id: 6, title: "Testimony Time | Grace Stories", image: `${process.env.PUBLIC_URL}/reel5.png` },
   ];
 
   const [favorites, setFavorites] = useState([]);
